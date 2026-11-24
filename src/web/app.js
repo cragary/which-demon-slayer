@@ -15,9 +15,12 @@ export const siteRoot = () => new URL(root, location.href).href;
 
 export const emblemUrl = (id) => `data:image/svg+xml,${encodeURIComponent(emblemSvg(id, 128))}`;
 
+/** 0 = midnight, 1 = sunrise. The quiz only warms the horizon (light text stays readable); dawn breaks at the result. */
 export function setProgress(p) {
+  const day = p >= 1;
   document.documentElement.style.setProperty('--progress', String(p));
-  document.body.classList.toggle('is-day', p >= 0.55);
+  document.documentElement.style.setProperty('--sky', String(day ? 1 : p * 0.35));
+  document.body.classList.toggle('is-day', day);
 }
 
 export function toast(msg) {

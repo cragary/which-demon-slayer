@@ -56,7 +56,11 @@ export async function showResult(result, { own }) {
   const rank = result.rank !== undefined ? DATA.ranks[result.rank] : null;
   const traits = result.traits;
   const answers = detail?.answers ? answerPairs(detail.answers) : undefined;
-  const why = (c) => (traits ? explain(traits, c, answers) : [c.blurb]);
+  const why = (c, pool = answers) => (traits ? explain(traits, c, pool) : [c.blurb]);
+  const slayerWhy = why(slayer);
+  // Don't quote the same answer twice: the demon card gets the remaining answers.
+  const quoted = slayerWhy.find((l) => l.startsWith('You chose'));
+  const demonPool = answers?.filter((a) => !quoted?.includes(`"${a.answer.text}"`));
   const name = result.name ? clampName(result.name) : '';
   const shareUrl = location.href;
   const shareText = STRINGS.sharedText(slayer.name, demon?.name);
@@ -73,10 +77,10 @@ export async function showResult(result, { own }) {
       <article class="result-block">
         <img src="${emblemUrl(slayer.id)}" alt="${escapeXml(slayer.name)} emblem">
         <div>
-          <p class="kicker">${STRINGS.slayerHeading}${result.simSlayer ? `, ${STRINGS.match(result.simSlayer)}` : ''}</p>
+          <p class="kicker">${own ? STRINGS.slayerHeading : 'Slayer'}${result.simSlayer ? `, ${STRINGS.match(result.simSlayer)}` : ''}</p>
           <h2 class="who">${escapeXml(slayer.name)}</h2>
           <p class="title">${escapeXml(slayer.title)}</p>
-          ${whyList(why(slayer))}
+          ${whyList(slayerWhy)}
           ${detail?.runnerSlayer ? `<p class="runner">${STRINGS.runnerUp(charById(detail.runnerSlayer).name)}</p>` : ''}
         </div>
       </article>
@@ -84,10 +88,10 @@ export async function showResult(result, { own }) {
       ${demon ? `<article class="result-block">
         <img src="${emblemUrl(demon.id)}" alt="${escapeXml(demon.name)} emblem">
         <div>
-          <p class="kicker">${STRINGS.demonHeading}${result.simDemon ? `, ${STRINGS.match(result.simDemon)}` : ''}</p>
+          <p class="kicker">${own ? STRINGS.demonHeading : 'Demon side'}${result.simDemon ? `, ${STRINGS.match(result.simDemon)}` : ''}</p>
           <h2 class="who">${escapeXml(demon.name)}</h2>
           <p class="title">${escapeXml(demon.title)}</p>
-          ${whyList(why(demon))}
+          ${whyList(why(demon, demonPool))}
           ${detail?.runnerDemon ? `<p class="runner">${STRINGS.runnerUp(charById(detail.runnerDemon).name)}</p>` : ''}
         </div>
       </article>` : ''}

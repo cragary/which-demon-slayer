@@ -49,7 +49,7 @@ export function badgeSvg(result, data, { format = 'portrait' } = {}) {
 
   const W = 1080, H = 1350;
   const bars = topTraits(result.traits).map((k, i) => {
-    const y = 1035 + i * 62;
+    const y = 1030 + i * 62;
     const v = Math.max(0, Math.min(10, result.traits[k]));
     return `${t(110, y + 30, 32, STRINGS.traits[k])}
   <rect x="420" y="${y + 6}" width="540" height="30" fill="none" stroke="${INK}" stroke-width="3"/>
@@ -65,18 +65,20 @@ export function badgeSvg(result, data, { format = 'portrait' } = {}) {
   ${emblemAt(slayer.id, 90, 230, 420)}
   ${t(300, 700, 30, STRINGS.slayerHeading.toUpperCase(), { family: FONT_DISPLAY, fill: CRIMSON, anchor: 'middle' })}
   ${t(300, 752, 44, slayer.name, { weight: 700, anchor: 'middle' })}
-  ${t(300, 796, 28, result.simSlayer ? `${slayer.title}, ${STRINGS.match(result.simSlayer)}` : slayer.title, { anchor: 'middle', opacity: 0.8 })}
+  ${t(300, 792, 24, slayer.title, { anchor: 'middle', opacity: 0.8 })}
+  ${result.simSlayer ? t(300, 830, 24, STRINGS.match(result.simSlayer), { anchor: 'middle', fill: CRIMSON }) : ''}
 
   ${demon ? `${emblemAt(demon.id, 640, 300, 320)}
   ${t(800, 700, 30, STRINGS.demonHeading.toUpperCase(), { family: FONT_DISPLAY, fill: CRIMSON, anchor: 'middle' })}
   ${t(800, 752, 40, demon.name, { weight: 700, anchor: 'middle' })}
-  ${t(800, 796, 28, demon.title, { anchor: 'middle', opacity: 0.8 })}` : ''}
+  ${t(800, 792, 24, demon.title, { anchor: 'middle', opacity: 0.8 })}
+  ${result.simDemon ? t(800, 830, 24, STRINGS.match(result.simDemon), { anchor: 'middle', fill: CRIMSON }) : ''}` : ''}
 
-  <line x1="90" y1="850" x2="${W - 90}" y2="850" stroke="${INK}" stroke-width="2" opacity="0.4"/>
-  ${breathing ? `<rect x="110" y="882" width="26" height="26" fill="${breathing.color}"/>
-  ${t(150, 906, 34, `${breathing.name}`, { weight: 700 })}` : ''}
-  ${rank ? `${t(W - 110, 906, 34, `Rank: ${rank.name}`, { weight: 700, anchor: 'end' })}` : ''}
-  ${rank ? t(W / 2, 970, 26, rank.line, { anchor: 'middle', opacity: 0.75 }) : ''}
+  <line x1="90" y1="868" x2="${W - 90}" y2="868" stroke="${INK}" stroke-width="2" opacity="0.4"/>
+  ${breathing ? `<rect x="110" y="900" width="26" height="26" fill="${breathing.color}"/>
+  ${t(150, 924, 34, `${breathing.name}`, { weight: 700 })}` : ''}
+  ${rank ? `${t(W - 110, 924, 34, `Rank: ${rank.name}`, { weight: 700, anchor: 'end' })}` : ''}
+  ${rank ? t(W / 2, 982, 26, rank.line, { anchor: 'middle', opacity: 0.75 }) : ''}
 
   ${bars}
 
