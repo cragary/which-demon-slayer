@@ -1,6 +1,5 @@
 // One question at a time; progress survives reloads (sessionStorage).
-import { DATA } from '../data/index.js';
-import { STRINGS } from '../data/strings.en.js';
+import { data as DATA, strings as STRINGS } from './i18n.js';
 import { escapeXml } from '../core/escape.js';
 import { render, setProgress } from './app.js';
 import { finishQuiz } from './result-view.js';
@@ -101,11 +100,11 @@ function showNameStep() {
   setProgress(0.97);
   render(`
     <section class="enter">
-      <h2>The sky is getting lighter.</h2>
-      <p class="lede">One last thing before the sun comes up. Do you want your name on the badge?</p>
+      <h2>${escapeXml(STRINGS.nameStepTitle)}</h2>
+      <p class="lede">${escapeXml(STRINGS.nameStepLede)}</p>
       <form id="name-form">
         <label class="name-field">${STRINGS.nameLabel}
-          <input name="name" maxlength="40" autocomplete="nickname" placeholder="${STRINGS.namePlaceholder}" value="${escapeXml(state.name ?? '')}">
+          <input name="name" maxlength="40" autocomplete="nickname" placeholder="${escapeXml(STRINGS.namePlaceholder)}" value="${escapeXml(state.name ?? '')}">
         </label>
         <div class="actions">
           <button class="btn" type="submit">${STRINGS.reveal}</button>

@@ -81,6 +81,16 @@ h3 { font-size: var(--step-1); margin: 0 0 0.5rem; }
 p { margin: 0 0 1rem; max-width: 62ch; }
 .lede { font-size: var(--step-1); line-height: 1.55; }
 
+/* ——— Language switch ——— */
+.lang-switch {
+  position: absolute; top: 0.9rem; right: max(1.25rem, calc((100% - 42rem) / 2));
+  font-family: var(--pixel); font-size: var(--step--1); color: inherit; text-decoration: none;
+  padding: 0.3rem 0.6rem; box-shadow: inset 0 0 0 2px currentColor; z-index: 2;
+}
+.lang-switch:hover { box-shadow: inset 0 0 0 2px currentColor, 3px 3px 0 var(--wisteria); }
+.fr-hint { margin: 0 0 1.25rem; }
+.fr-hint a { color: var(--dawn); font-family: var(--pixel); }
+
 /* ——— Landing ——— */
 .crow { display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 2.25rem; }
 .crow svg { flex: none; width: 72px; height: 72px; image-rendering: pixelated; }

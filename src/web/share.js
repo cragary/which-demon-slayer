@@ -26,8 +26,8 @@ async function embeddedFonts(root) {
   return fontCss;
 }
 
-export async function badgeSvgWithFonts(result, data, root, format = 'portrait') {
-  const svg = badgeSvg(result, data, { format });
+export async function badgeSvgWithFonts(result, data, root, format = 'portrait', strings) {
+  const svg = badgeSvg(result, data, { format, strings });
   const css = await embeddedFonts(root);
   return svg.replace(/(<svg[^>]*>)/, `$1<defs><style>${css}</style></defs>`);
 }

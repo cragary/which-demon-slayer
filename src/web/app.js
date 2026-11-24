@@ -1,18 +1,14 @@
 // Entry point: landing, quiz or result, decided by the URL.
-import { DATA } from '../data/index.js';
-import { STRINGS } from '../data/strings.en.js';
+import { data as DATA, strings as STRINGS, lang, otherLangHref } from './i18n.js';
 import { decodeResult } from '../core/share-url.js';
 import { MOTIFS } from '../data/emblems.js';
 import { emblemSvg } from '../render/emblem.js';
 import { startQuiz, hasProgress } from './quiz-view.js';
 import { showResult } from './result-view.js';
 import { store } from './store.js';
+import { escapeXml } from '../core/escape.js';
 
 const app = document.getElementById('app');
-const root = document.body.dataset.root || './';
-
-/** Absolute URL of the site root, derived from where this page lives (works locally and on Pages). */
-export const siteRoot = () => new URL(root, location.href).href;
 
 export const emblemUrl = (id) => `data:image/svg+xml,${encodeURIComponent(emblemSvg(id, 128))}`;
 
@@ -52,23 +48,27 @@ const crowSvg = () => {
 export function showLanding() {
   setProgress(0);
   const resume = hasProgress();
-  const cast = DATA.characters.map((c) => `<img src="${emblemUrl(c.id)}" alt="" title="${c.name}" loading="lazy">`).join('');
+  const cast = DATA.characters.map((c) => `<img src="${emblemUrl(c.id)}" alt="" title="${escapeXml(c.name)}" loading="lazy">`).join('');
+  const frHint = lang === 'en' && (navigator.languages ?? [navigator.language]).some((l) => /^fr\b/i.test(l));
   render(`
     <section class="enter">
-      <div class="crow">${crowSvg()}<p class="crow-says">Caw! New recruit! Twenty questions stand between you and dawn.</p></div>
-      <h1>${STRINGS.title}</h1>
-      <p class="lede">Answer like you would on a real mission. When the sun comes up, you'll learn which Slayer you're closest to, which demon lurks in your shadow, how you breathe and where you rank in the Corps.</p>
+      ${frHint ? `<p class="fr-hint"><a href="${escapeXml(otherLangHref())}" hreflang="fr" lang="fr">${STRINGS.frHint}</a></p>` : ''}
+      <div class="crow">${crowSvg()}<p class="crow-says">${escapeXml(STRINGS.crow)}</p></div>
+      <h1>${escapeXml(STRINGS.title)}</h1>
+      <p class="lede">${escapeXml(STRINGS.lede)}</p>
       <div class="actions">
-        <button class="btn" id="go">${resume ? 'Continue the mission' : 'Accept the mission'}</button>
-        ${resume ? '<button class="btn quiet" id="restart">Start over</button>' : ''}
+        <button class="btn" id="go">${escapeXml(resume ? STRINGS.resume : STRINGS.accept)}</button>
+        ${resume ? `<button class="btn quiet" id="restart">${escapeXml(STRINGS.restart)}</button>` : ''}
       </div>
-      <div class="cast" aria-label="42 possible characters">${cast}</div>
+      <div class="cast" aria-label="${escapeXml(STRINGS.castLabel)}">${cast}</div>
     </section>`);
   document.getElementById('go').onclick = () => startQuiz({ resume });
   document.getElementById('restart')?.addEventListener('click', () => startQuiz({ resume: false }));
 }
 
 function boot() {
+  const sw = document.querySelector('.lang-switch');
+  if (sw) sw.href = otherLangHref();
   const slayerId = document.body.dataset.slayer;
   if (slayerId && !slayerId.startsWith('%')) {
     const result = decodeResult(slayerId, new URLSearchParams(location.search), DATA);

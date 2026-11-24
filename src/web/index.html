@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="%LANG%">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -7,6 +7,10 @@
   <meta name="description" content="%DESCRIPTION%">
   <meta name="theme-color" content="#141a33">
   <meta property="og:type" content="website">
+  <meta property="og:locale" content="%OG_LOCALE%">
+  <link rel="alternate" hreflang="en" href="%HREF_EN%">
+  <link rel="alternate" hreflang="fr" href="%HREF_FR%">
+  <link rel="alternate" hreflang="x-default" href="%HREF_EN%">
   <meta property="og:title" content="%TITLE%">
   <meta property="og:description" content="%DESCRIPTION%">
   <meta property="og:url" content="%OG_URL%">
@@ -21,13 +25,14 @@
   <link rel="preload" href="%ROOT%fonts/dotgothic16-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="%ROOT%src/web/styles.css">
 </head>
-<body data-root="%ROOT%" data-slayer="%SLAYER%">
+<body data-root="%ROOT%" data-slayer="%SLAYER%" data-lang="%LANG%">
+  <a class="lang-switch" href="%OTHER_HREF%" hreflang="%OTHER_LANG%" lang="%OTHER_LANG%" aria-label="%SWITCH_LABEL%">%SWITCH_TO%</a>
   <div class="sky" aria-hidden="true"></div>
   <main id="app" tabindex="-1">
-    <noscript><p class="lede">This quiz needs JavaScript to run.</p></noscript>
+    <noscript><p class="lede">%NOJS%</p></noscript>
   </main>
   <footer class="site-foot">
-    <p>Unofficial fan project. Not affiliated with Koyoharu Gotouge, Shueisha, ufotable or Aniplex. Spoiler-free up to the Swordsmith Village arc.</p>
+    <p>%DISCLAIMER%</p>
   </footer>
   <div class="toast" role="status" aria-live="polite"></div>
   <script type="module" src="%ROOT%src/web/app.js"></script>

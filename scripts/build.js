@@ -4,8 +4,8 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Resvg } from '@resvg/resvg-js';
 import { decompress } from 'wawoff2';
-import { DATA } from '../src/data/index.js';
-import { BASE_URL, BASE_PATH, QUIZ_TITLE } from '../src/config.js';
+import { dataFor, stringsFor, LANGS } from '../src/data/index.js';
+import { BASE_URL, BASE_PATH } from '../src/config.js';
 import { badgeSvg } from '../src/render/badge.js';
 import { emblemAt, emblemSvg } from '../src/render/emblem.js';
 import { escapeXml } from '../src/core/escape.js';
@@ -38,44 +38,73 @@ writeFileSync(join(DIST, '.nojekyll'), '');
 
 // 2. HTML pages from one template.
 const template = readFileSync(join(ROOT, 'src/web/index.html'), 'utf8');
-const page = ({ root, title, description, ogUrl, ogImage, slayer = '' }) =>
-  template
-    .replaceAll('%ROOT%', root)
-    .replaceAll('%TITLE%', escapeXml(title))
-    .replaceAll('%DESCRIPTION%', escapeXml(description))
-    .replaceAll('%OG_URL%', ogUrl)
-    .replaceAll('%OG_IMAGE%', ogImage)
-    .replaceAll('%SLAYER%', slayer);
+const LOCALE = { en: 'en_US', fr: 'fr_FR' };
+const prefix = (lang) => (lang === 'fr' ? 'fr/' : '');
+const other = (lang) => (lang === 'fr' ? 'en' : 'fr');
 
-const DESCRIPTION = '20 questions. 42 characters. Find your Slayer, your demon side, your breathing style and your Corps rank. Unofficial fan quiz.';
-writeFileSync(join(DIST, 'index.html'), page({ root: './', title: QUIZ_TITLE, description: DESCRIPTION, ogUrl: BASE_URL, ogImage: `${BASE_URL}og/default.png` }));
-
-const slayers = DATA.characters.filter((c) => c.pool === 'slayer');
-for (const c of slayers) {
-  mkdirSync(join(DIST, 'r', c.id), { recursive: true });
-  const first = c.name.split(' ')[0];
-  writeFileSync(join(DIST, 'r', c.id, 'index.html'), page({
-    root: '../../',
-    title: `I'm ${first}! ${QUIZ_TITLE}`,
-    description: `${c.title}. ${DESCRIPTION}`,
-    ogUrl: `${BASE_URL}r/${c.id}/`,
-    ogImage: `${BASE_URL}og/${c.id}.png`,
-    slayer: c.id,
-  }));
+/** Fill the page template. `rel` is the page path below the language prefix ('' or 'r/<id>/'). */
+function page(lang, { rel, title, description, ogImage, slayer = '' }) {
+  const S = stringsFor(lang);
+  const depth = (prefix(lang) + rel).split('/').filter(Boolean).length;
+  const vars = {
+    LANG: lang,
+    ROOT: depth ? '../'.repeat(depth) : './',
+    TITLE: escapeXml(title),
+    DESCRIPTION: escapeXml(description),
+    OG_URL: `${BASE_URL}${prefix(lang)}${rel}`,
+    OG_IMAGE: ogImage,
+    OG_LOCALE: LOCALE[lang],
+    HREF_EN: `${BASE_URL}${rel}`,
+    HREF_FR: `${BASE_URL}fr/${rel}`,
+    OTHER_HREF: `${BASE_URL}${prefix(other(lang))}${rel}`,
+    OTHER_LANG: other(lang),
+    SWITCH_TO: escapeXml(S.switchTo),
+    SWITCH_LABEL: escapeXml(S.switchLabel),
+    NOJS: escapeXml(S.noJs),
+    DISCLAIMER: escapeXml(S.disclaimer),
+    SLAYER: slayer,
+  };
+  return template.replace(/%([A-Z_]+)%/g, (m, k) => (k in vars ? vars[k] : m));
 }
-writeFileSync(join(DIST, '404.html'), `<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=${BASE_PATH}"><title>${QUIZ_TITLE}</title><a href="${BASE_PATH}">${QUIZ_TITLE}</a>`);
 
-// 3. OG preview images.
 const render = (svg) => new Resvg(svg, { font: { fontFiles: ttfFiles, loadSystemFonts: false, defaultFontFamily: 'Shippori Mincho' } }).render().asPng();
-for (const c of slayers) writeFileSync(join(DIST, 'og', `${c.id}.png`), render(badgeSvg({ slayer: c.id }, DATA, { format: 'og' })));
-
 const featured = ['tanjiro', 'gyomei', 'rengoku', 'shinobu', 'muzan', 'akaza', 'nezuko', 'zenitsu', 'inosuke', 'kokushibo'];
-const defaultOg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+let count = 0;
+
+for (const lang of LANGS) {
+  const data = dataFor(lang);
+  const S = stringsFor(lang);
+  const ogDir = join(DIST, 'og', prefix(lang));
+  const out = join(DIST, prefix(lang));
+  mkdirSync(ogDir, { recursive: true });
+  mkdirSync(out, { recursive: true });
+
+  writeFileSync(join(out, 'index.html'), page(lang, { rel: '', title: S.title, description: S.pageDescription, ogImage: `${BASE_URL}og/${prefix(lang)}default.png` }));
+
+  for (const c of data.characters.filter((x) => x.pool === 'slayer')) {
+    mkdirSync(join(out, 'r', c.id), { recursive: true });
+    writeFileSync(join(out, 'r', c.id, 'index.html'), page(lang, {
+      rel: `r/${c.id}/`,
+      title: S.pageTitleFor(c.name.split(' ')[0]),
+      description: `${c.title}. ${S.pageDescription}`,
+      ogImage: `${BASE_URL}og/${prefix(lang)}${c.id}.png`,
+      slayer: c.id,
+    }));
+    writeFileSync(join(ogDir, `${c.id}.png`), render(badgeSvg({ slayer: c.id }, data, { format: 'og', strings: S })));
+    count++;
+  }
+
+  writeFileSync(join(ogDir, 'default.png'), render(`<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <rect width="1200" height="630" fill="#141a33"/>
   ${featured.map((id, i) => emblemAt(id, 60 + (i % 5) * 220, i < 5 ? 40 : 430, 160)).join('')}
-  <text x="600" y="300" font-family="DotGothic16" font-size="64" fill="#e9e4f5" text-anchor="middle">${escapeXml(QUIZ_TITLE)}</text>
-  <text x="600" y="365" font-family="Shippori Mincho" font-size="30" fill="#f2b33d" text-anchor="middle">Your Slayer, your demon side, your breathing and your rank.</text>
-</svg>`;
-writeFileSync(join(DIST, 'og', 'default.png'), render(defaultOg));
+  <text x="600" y="300" font-family="DotGothic16" font-size="${lang === 'fr' ? 52 : 64}" fill="#e9e4f5" text-anchor="middle">${escapeXml(S.title)}</text>
+  <text x="600" y="365" font-family="Shippori Mincho" font-size="30" fill="#f2b33d" text-anchor="middle">${escapeXml(S.ogDefault)}</text>
+</svg>`));
+}
 
-console.log(`built ${slayers.length} result pages, ${slayers.length + 1} OG images → dist/`);
+// GitHub Pages serves this for any unknown path: send /fr/... to the French home, the rest to English.
+writeFileSync(join(DIST, '404.html'), `<!doctype html><meta charset="utf-8"><title>Demon Slayer quiz</title>
+<script>location.replace(${JSON.stringify(BASE_PATH)} + (/\/fr(\/|$)/.test(location.pathname) ? 'fr/' : ''));</script>
+<meta http-equiv="refresh" content="1; url=${BASE_PATH}"><a href="${BASE_PATH}">English</a> · <a href="${BASE_PATH}fr/">Français</a>`);
+
+console.log(`built ${count} result pages and ${count + LANGS.length} OG images in ${LANGS.length} languages → dist/`);
