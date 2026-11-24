@@ -162,7 +162,7 @@ export const SLAYERS = [
       ruthlessness: 'Like Obanai, your words can cut deeper than a blade.',
       composure: 'Like Obanai, you watch everything carefully before you strike.',
     }),
-  ch('sanemi', 'Sanemi Shinazugawa', 'Wind Hashira', [2, 6, 10, 1, 7, 9, 6, 8], ['#ecf0f1', '#1e8449', '#7b241c'],
+  ch('sanemi', 'Sanemi Shinazugawa', 'Wind Hashira', [2, 6, 10, 1, 7, 9, 6, 8], ['#1e8449', '#ecf0f1', '#7b241c'],
     'Explosive, scarred and impossible to intimidate, you hide a protective heart behind a hurricane.', {
       intensity: 'Like Sanemi, you are a storm. Nobody misses when you walk in.',
       independence: 'Like Sanemi, you trust no one easily and push people away to keep them safe.',
