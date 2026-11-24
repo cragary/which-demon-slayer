@@ -1,4 +1,6 @@
-// 20 situational questions. Each answer: deltas (−2..2) per trait, resolve 0–2 (how decisive / steady).
+// 20 everyday questions: situations anyone lives, whatever their job, age or country
+// (no offices, no show vocabulary; the Demon Slayer world lives in the frame and the results).
+// Each answer: deltas (−2..2) per trait, resolve 0–2 (how decisive / steady).
 // Trait keys: composure, compassion, intensity, playfulness, discipline, independence, ambition, ruthlessness.
 const q = (id, text, answers) => ({
   id,
@@ -7,124 +9,124 @@ const q = (id, text, answers) => ({
 });
 
 export const QUESTIONS = [
-  q('q1', 'Midnight. Your crow lands on the windowsill screaming about an urgent mission two villages away. You…', [
-    ['Are already dressed. You slept in your uniform anyway.', { discipline: 2, composure: 1 }, 2],
-    ['Beg for five more minutes, then sprint the whole way to make up for it.', { playfulness: 2, discipline: -1, intensity: 1 }, 1],
-    ['Wake the others. Nobody walks into the dark alone.', { independence: -2, compassion: 1 }, 1],
-    ['Go, but first ask the crow what is in it for you.', { ambition: 2, compassion: -1 }, 0],
+  q('q1', 'Late at night, a friend calls: they need your help with something right now, across town. You…', [
+    ['Are out the door in two minutes. You’re always ready.', { discipline: 2, composure: 1 }, 2],
+    ['Groan, ask for ten more minutes, then rush to make up for it.', { playfulness: 2, discipline: -1, intensity: 1 }, 1],
+    ['Call one or two others, so nobody handles it alone.', { independence: -2, compassion: 1 }, 1],
+    ['Ask what’s in it for you before you move.', { ambition: 2, compassion: -1 }, 0],
   ]),
-  q('q2', 'A new recruit freezes in front of a demon. You…', [
-    ['Step in front of them without a word.', { compassion: 2, composure: 1 }, 2],
-    ['Yell at them to pull it together. Fear gets people killed.', { intensity: 2, compassion: -1, ruthlessness: 1 }, 2],
-    ['Talk them through it calmly: breathe, stance, strike.', { composure: 2, compassion: 1, independence: -1 }, 1],
-    ['Let them face it. That is how you learn who is worth training.', { ruthlessness: 2, compassion: -2 }, 1],
+  q('q2', 'Someone younger than you freezes in front of a crowd they have to speak to. You…', [
+    ['Step up next to them without a word.', { compassion: 2, composure: 1 }, 2],
+    ['Tell them firmly to pull it together. Everyone is watching.', { intensity: 2, compassion: -1, ruthlessness: 1 }, 2],
+    ['Quietly walk them through it: breathe, look at one face, start.', { composure: 2, compassion: 1, independence: -1 }, 1],
+    ['Let them struggle. That’s how people learn.', { ruthlessness: 2, compassion: -2 }, 1],
   ]),
-  q('q3', 'Your teacher hands you a boulder and says: cut it. A week later, it has not moved. You…', [
-    ['Keep going. Sunrise to sunset. Another week, another month.', { discipline: 2, composure: 1 }, 2],
-    ['Look for a trick. There is always a cleverer way.', { independence: 1, playfulness: 1, discipline: -1, ambition: 1 }, 1],
-    ['Cry about it loudly to anyone nearby, then keep going anyway.', { playfulness: 1, intensity: 1, composure: -2 }, 1],
-    ['Decide the boulder is beneath you. You were meant for greater things.', { ambition: 2, discipline: -2 }, 0],
+  q('q3', 'You’ve been trying to learn something hard for weeks, and it still isn’t working. You…', [
+    ['Keep practising, every day, for as long as it takes.', { discipline: 2, composure: 1 }, 2],
+    ['Look for a shortcut. There’s always a smarter way.', { independence: 1, playfulness: 1, discipline: -1, ambition: 1 }, 1],
+    ['Complain loudly to anyone nearby, then keep going anyway.', { playfulness: 1, intensity: 1, composure: -2 }, 1],
+    ['Decide it’s beneath you. You’re meant for bigger things.', { ambition: 2, discipline: -2 }, 0],
   ]),
-  q('q4', 'After a brutal mission your squad finally gets a free evening. You are…', [
-    ['Organising a feast and making sure everyone eats before you do.', { compassion: 2, independence: -2, playfulness: 1 }, 1],
-    ['Training alone by the river.', { discipline: 2, independence: 2, playfulness: -1 }, 1],
-    ['Starting a loud, flamboyant contest, and winning it.', { playfulness: 2, ambition: 1, intensity: 1 }, 1],
-    ['Sitting quietly, listening to everyone else talk.', { composure: 2, intensity: -2 }, 1],
+  q('q4', 'For once, all your friends are free on the same evening. You are…', [
+    ['Cooking for everyone and making sure they all eat before you.', { compassion: 2, independence: -2, playfulness: 1 }, 1],
+    ['Slipping away to work on your own thing, alone.', { discipline: 2, independence: 2, playfulness: -1 }, 1],
+    ['Starting a loud game or contest, and winning it.', { playfulness: 2, ambition: 1, intensity: 1 }, 1],
+    ['Sitting back and listening to everyone talk.', { composure: 2, intensity: -2 }, 1],
   ]),
-  q('q5', 'A demon offers you real power in exchange for one small betrayal. You…', [
-    ['Refuse instantly. Some lines do not move.', { ruthlessness: -2, discipline: 1, composure: 1 }, 2],
-    ['Laugh in its face and attack.', { intensity: 2, playfulness: 1, ambition: -1 }, 2],
-    ['Hesitate. Just for a second, you wonder.', { ambition: 2, composure: -1 }, 0],
-    ['Pretend to accept, get close, then strike.', { ruthlessness: 2, independence: 1, compassion: -1 }, 1],
+  q('q5', 'Someone offers you a big opportunity, but only if you go behind a friend’s back. You…', [
+    ['Say no straight away. Some lines don’t move.', { ruthlessness: -2, discipline: 1, composure: 1 }, 2],
+    ['Laugh in their face and tell your friend everything.', { intensity: 2, playfulness: 1, ambition: -1 }, 2],
+    ['Hesitate. Just for a second, you’re tempted.', { ambition: 2, composure: -1 }, 0],
+    ['Pretend to agree, then turn it against them.', { ruthlessness: 2, independence: 1, compassion: -1 }, 1],
   ]),
-  q('q6', 'Someone mocks your friend in the middle of the street. You…', [
-    ['Grab them by the collar. Right now.', { intensity: 2, compassion: 1, composure: -2 }, 2],
-    ['Say one cold sentence that ends the conversation.', { composure: 1, ruthlessness: 1, playfulness: -1 }, 2],
-    ['Crack a joke that turns the whole crowd against them.', { playfulness: 2, compassion: 1 }, 1],
-    ['Keep walking. Not your business.', { independence: 2, compassion: -2 }, 0],
+  q('q6', 'Someone mocks your friend in front of a group. You…', [
+    ['Get right up in their face. Now.', { intensity: 2, compassion: 1, composure: -2 }, 2],
+    ['Say one cold sentence that ends it.', { composure: 1, ruthlessness: 1, playfulness: -1 }, 2],
+    ['Crack a joke that turns everyone against them.', { playfulness: 2, compassion: 1 }, 1],
+    ['Stay out of it. Not your business.', { independence: 2, compassion: -2 }, 0],
   ]),
-  q('q7', 'The mission plan you were handed is clearly bad. You…', [
-    ['Follow it anyway. Orders exist for a reason.', { discipline: 2, independence: -2 }, 1],
-    ['Ignore it and handle things your way, alone.', { independence: 2, ambition: 1, discipline: -1 }, 2],
-    ['Rewrite it overnight and present it to the team at dawn.', { discipline: 1, ambition: 1, independence: -1, composure: 1 }, 2],
-    ['Charge in and improvise. Plans are for the cautious.', { intensity: 2, playfulness: 1, composure: -1 }, 1],
+  q('q7', 'The person in charge (an elder, a parent, a coach, whoever) tells you to do something a way you’re sure is wrong. You…', [
+    ['Do it their way anyway. They’re in charge for a reason.', { discipline: 2, independence: -2 }, 1],
+    ['Ignore them and do it your own way, alone.', { independence: 2, ambition: 1, discipline: -1 }, 2],
+    ['Work out a better plan and show it to them before you start.', { discipline: 1, ambition: 1, independence: -1, composure: 1 }, 2],
+    ['Jump in and improvise. Plans are for the cautious.', { intensity: 2, playfulness: 1, composure: -1 }, 1],
   ]),
   q('q8', 'Which compliment would mean the most to you?', [
-    ['"You are the strongest."', { ambition: 2, intensity: 1, compassion: -1 }, 1],
+    ['"Nobody is stronger than you."', { ambition: 2, intensity: 1, compassion: -1 }, 1],
     ['"You never let anyone down."', { compassion: 1, discipline: 1, independence: -1 }, 1],
-    ['"Being around you makes everything brighter."', { playfulness: 2, compassion: 1 }, 1],
+    ['"Everything is brighter when you’re around."', { playfulness: 2, compassion: 1 }, 1],
     ['"Nothing ever seems to shake you."', { composure: 2, intensity: -1 }, 1],
   ]),
-  q('q9', 'You lose a duel in front of everyone. You…', [
-    ['Bow, thank them, and ask for a rematch tomorrow.', { composure: 1, discipline: 2, ambition: 1 }, 2],
-    ['Seethe. You will train until you crush them.', { ambition: 2, intensity: 2, compassion: -1 }, 1],
-    ['Shrug it off with a joke. Dinner is waiting.', { playfulness: 2, ambition: -2 }, 1],
-    ['Quietly decide they will not be around for a rematch.', { ruthlessness: 2, compassion: -2, composure: 1 }, 0],
+  q('q9', 'You lose at something in front of everyone: a game, a match, an argument. You…', [
+    ['Congratulate them and ask for a rematch.', { composure: 1, discipline: 2, ambition: 1 }, 2],
+    ['Seethe. You’ll practise until you crush them.', { ambition: 2, intensity: 2, compassion: -1 }, 1],
+    ['Laugh it off. Food is waiting.', { playfulness: 2, ambition: -2 }, 1],
+    ['Quietly decide they’ll pay for it one day.', { ruthlessness: 2, compassion: -2, composure: 1 }, 0],
   ]),
-  q('q10', 'A kind old villager serves you a dish you truly cannot stand. You…', [
-    ['Eat every bite and thank them sincerely.', { compassion: 2, discipline: 1 }, 1],
-    ['Politely decline. Honesty first.', { composure: 1, independence: 1, playfulness: -1 }, 1],
-    ['Turn it into a dramatic performance of suffering.', { playfulness: 2, composure: -1 }, 0],
-    ['Push the bowl away. You do not eat what you do not like.', { ruthlessness: 1, compassion: -2, independence: 1 }, 1],
+  q('q10', 'An elderly neighbour proudly serves you a dish you really can’t stand. You…', [
+    ['Eat every bite and thank them warmly.', { compassion: 2, discipline: 1 }, 1],
+    ['Politely say it’s not for you. Honesty first.', { composure: 1, independence: 1, playfulness: -1 }, 1],
+    ['Make a big dramatic show of struggling through it.', { playfulness: 2, composure: -1 }, 0],
+    ['Push the plate away. You don’t eat what you don’t like.', { ruthlessness: 1, compassion: -2, independence: 1 }, 1],
   ]),
-  q('q11', 'In a fight, your favourite approach is…', [
-    ['Overwhelming force from the very first second.', { intensity: 2, ruthlessness: 1, composure: -1 }, 2],
-    ['Patience. Read them, wait for the opening.', { composure: 2, discipline: 1, intensity: -2 }, 1],
-    ['Speed and chaos. They will never predict you.', { playfulness: 1, independence: 1, discipline: -2 }, 1],
-    ['Protecting the people behind you comes before winning.', { compassion: 2, independence: -2 }, 2],
+  q('q11', 'When a disagreement turns into a real conflict, your style is to…', [
+    ['Hit hard and fast, and settle it right away.', { intensity: 2, ruthlessness: 1, composure: -1 }, 2],
+    ['Stay patient: listen, and wait for the right moment.', { composure: 2, discipline: 1, intensity: -2 }, 1],
+    ['Keep them guessing. You never do the expected thing.', { playfulness: 1, independence: 1, discipline: -2 }, 1],
+    ['Protect the people around you first. Winning comes second.', { compassion: 2, independence: -2 }, 2],
   ]),
-  q('q12', 'A cornered demon begs for mercy, weeping about the human it used to be. You…', [
-    ['Grant it a peaceful end and say a prayer for it.', { compassion: 2, composure: 1, ruthlessness: -1 }, 2],
-    ['Cut it down. Tears do not bring back its victims.', { ruthlessness: 2, intensity: 1, compassion: -1 }, 2],
-    ['Freeze. You cannot make yourself do it.', { compassion: 1, composure: -2, ruthlessness: -2 }, 0],
-    ['Ask questions first. What it knows could save lives.', { discipline: 1, independence: 1, composure: 1 }, 1],
+  q('q12', 'Someone who hurt people you love breaks down in tears and begs you to forgive them. You…', [
+    ['Forgive them, and mean it.', { compassion: 2, composure: 1, ruthlessness: -1 }, 2],
+    ['Walk away. Tears don’t undo what they did.', { ruthlessness: 2, intensity: 1, compassion: -1 }, 2],
+    ['Freeze. You don’t know what to feel.', { compassion: 1, composure: -2, ruthlessness: -2 }, 0],
+    ['Ask questions first. You want to understand what happened.', { discipline: 1, independence: 1, composure: 1 }, 1],
   ]),
-  q('q13', 'The war is over. Where do you live now?', [
-    ['A busy town where everybody knows your name.', { independence: -2, playfulness: 1, compassion: 1 }, 1],
-    ['A hut on a mountain, far from everyone.', { independence: 2, composure: 1, playfulness: -1 }, 1],
-    ['A grand estate. You earned it.', { ambition: 2, playfulness: 1 }, 1],
-    ['A dojo, so you can train the next generation.', { discipline: 2, compassion: 1, ambition: -1 }, 1],
+  q('q13', 'If you could live anywhere, for good, you’d choose…', [
+    ['A lively neighbourhood where everyone knows your name.', { independence: -2, playfulness: 1, compassion: 1 }, 1],
+    ['A quiet place, far from everyone.', { independence: 2, composure: 1, playfulness: -1 }, 1],
+    ['A big, beautiful house. You’d have earned it.', { ambition: 2, playfulness: 1 }, 1],
+    ['A place where you can teach and pass on what you know.', { discipline: 2, compassion: 1, ambition: -1 }, 1],
   ]),
-  q('q14', 'A teammate takes credit for the demon you slew. You…', [
-    ['Let it go. The demon is gone, and that is what matters.', { compassion: 1, ambition: -2, composure: 1 }, 1],
-    ['Correct the record, loudly and publicly.', { ambition: 2, intensity: 1 }, 2],
-    ['Feel quietly hurt and say nothing.', { composure: -1, independence: 1, intensity: -1 }, 0],
-    ['Remember it. You will make sure it never happens again.', { ruthlessness: 2, ambition: 1 }, 1],
+  q('q14', 'Someone takes credit, in front of everyone, for something you did. You…', [
+    ['Let it go. It got done, and that’s what matters.', { compassion: 1, ambition: -2, composure: 1 }, 1],
+    ['Set the record straight, loudly, right there.', { ambition: 2, intensity: 1 }, 2],
+    ['Feel hurt and say nothing.', { composure: -1, independence: 1, intensity: -1 }, 0],
+    ['Remember it. It won’t happen twice.', { ruthlessness: 2, ambition: 1 }, 1],
   ]),
   q('q15', 'What scares you most?', [
     ['Losing the people you love.', { compassion: 2, independence: -1 }, 1],
     ['Being forgotten.', { ambition: 2, playfulness: 1 }, 1],
-    ['Dying. You would do anything to keep living.', { ruthlessness: 2, ambition: 1, compassion: -1 }, 0],
-    ['Being weak when it finally matters.', { discipline: 1, intensity: 2 }, 2],
+    ['Dying. You’d do almost anything to stay alive.', { ruthlessness: 2, ambition: 1, compassion: -1 }, 0],
+    ['Being weak when it really matters.', { discipline: 1, intensity: 2 }, 2],
   ]),
-  q('q16', 'You arrive late: three slayers wounded, one demon still standing. You…', [
-    ['Carry the wounded out first, then come back for it.', { compassion: 2, composure: 1, discipline: 1 }, 2],
-    ['Take it on head-first, alone, right now.', { intensity: 2, independence: 2, composure: -1 }, 2],
-    ['Send for backup and hold a defensive line.', { discipline: 2, independence: -2, composure: 1 }, 1],
-    ['Wait in the shadows until it lets its guard down.', { ruthlessness: 1, composure: 2, compassion: -2 }, 1],
+  q('q16', 'Everything is going wrong around you: people are hurt, shouting, panicking. You…', [
+    ['Look after the people who are hurt first, then deal with the rest.', { compassion: 2, composure: 1, discipline: 1 }, 2],
+    ['Charge straight at the problem, alone, right now.', { intensity: 2, independence: 2, composure: -1 }, 2],
+    ['Call for help and organise everyone to hold things together.', { discipline: 2, independence: -2, composure: 1 }, 1],
+    ['Hang back and watch until you see exactly where to strike.', { ruthlessness: 1, composure: 2, compassion: -2 }, 1],
   ]),
-  q('q17', 'Your friends would describe you in one word as…', [
+  q('q17', 'Your friends would sum you up in one word:', [
     ['Loud.', { intensity: 2, playfulness: 1, composure: -1 }, 1],
     ['Kind.', { compassion: 2, ruthlessness: -1 }, 1],
     ['Mysterious.', { independence: 2, playfulness: -2, composure: 1 }, 1],
     ['Driven.', { ambition: 2, discipline: 1 }, 1],
   ]),
-  q('q18', 'A festival comes to town on your one day off. You…', [
+  q('q18', 'There’s a big celebration in your neighbourhood on your only day off. You…', [
     ['Are first in line for every game and every snack.', { playfulness: 2, intensity: 1, discipline: -1 }, 1],
     ['Go, mostly to keep an eye on the younger ones.', { compassion: 2, discipline: 1, playfulness: -1 }, 1],
-    ['Skip it. Training does not take days off.', { discipline: 2, playfulness: -2 }, 1],
-    ['Go alone and watch the lanterns from a rooftop.', { independence: 2, composure: 1 }, 1],
+    ['Skip it. You’ve got things to work on.', { discipline: 2, playfulness: -2 }, 1],
+    ['Go alone and watch it all from a quiet spot.', { independence: 2, composure: 1 }, 1],
   ]),
-  q('q19', 'Someone far stronger than you offers to train you, but they are cruel. You…', [
-    ['Accept. Strength is strength.', { ambition: 2, ruthlessness: 1, compassion: -1 }, 2],
-    ['Refuse. You will find your own way.', { independence: 2, ruthlessness: -1, discipline: 1 }, 1],
+  q('q19', 'Someone brilliant at what you want to learn offers to teach you, but they’re harsh and cruel. You…', [
+    ['Accept. Results are results.', { ambition: 2, ruthlessness: 1, compassion: -1 }, 2],
+    ['Refuse. You’ll find your own way.', { independence: 2, ruthlessness: -1, discipline: 1 }, 1],
     ['Accept, and try to soften them along the way.', { compassion: 2, playfulness: 1 }, 1],
-    ['Accept, keep your head down, and endure.', { discipline: 2, composure: 1, intensity: -1 }, 1],
+    ['Accept, keep your head down and get through it.', { discipline: 2, composure: 1, intensity: -1 }, 1],
   ]),
-  q('q20', 'The sun finally rises after the longest night of your life. You feel…', [
+  q('q20', 'After the longest, hardest day you’ve had in ages, you finally lie down. You feel…', [
     ['Quiet gratitude.', { composure: 2, compassion: 1, ambition: -1 }, 1],
-    ['Hungry. Extremely hungry.', { playfulness: 2, intensity: -1 }, 1],
-    ['Already thinking about the next fight.', { intensity: 1, ambition: 2 }, 2],
-    ['Annoyed. The night was when you felt strongest.', { ruthlessness: 2, independence: 1, compassion: -1 }, 0],
+    ['Hungry. Very hungry.', { playfulness: 2, intensity: -1 }, 1],
+    ['Already thinking about tomorrow’s fights.', { intensity: 1, ambition: 2 }, 2],
+    ['A little let down that it’s over. Chaos is when you feel most alive.', { ruthlessness: 2, independence: 1, compassion: -1 }, 0],
   ]),
 ];

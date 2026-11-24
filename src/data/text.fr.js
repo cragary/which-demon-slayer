@@ -4,106 +4,106 @@
 const typo = (s) => s.replace(/ ([?!:;»])/g, ' $1').replace(/« /g, '« ');
 
 const Q = {
-  q1: ['Minuit. Ton corbeau se pose sur le rebord de la fenêtre en hurlant : mission urgente, deux villages plus loin. Tu…', [
-    'Es déjà habillé·e. Tu as dormi en uniforme, de toute façon.',
-    'Supplies qu’on te laisse cinq minutes de plus, puis cours tout le trajet pour rattraper ton retard.',
-    'Réveilles les autres. Personne ne part seul dans le noir.',
-    'Y vas, mais demandes d’abord au corbeau ce que tu y gagnes.']],
-  q2: ['Une nouvelle recrue se fige face à un démon. Tu…', [
-    'Te places devant elle sans un mot.',
-    'Lui cries de se ressaisir. La peur tue.',
-    'La guides calmement : respire, garde, frappe.',
-    'La laisses affronter ça. C’est comme ça qu’on voit qui mérite d’être formé.']],
-  q3: ['Ton maître te montre un rocher : « Tranche-le. » Une semaine plus tard, il n’a pas bougé. Tu…', [
-    'Continues. Du lever au coucher du soleil. Une semaine de plus, un mois de plus.',
-    'Cherches une astuce. Il y a toujours un moyen plus malin.',
+  q1: ['Tard le soir, un ami t’appelle : il a besoin de ton aide tout de suite, à l’autre bout de la ville. Tu…', [
+    'Es dehors en deux minutes. Tu es toujours prêt·e.',
+    'Râles, demandes dix minutes de plus, puis te dépêches pour rattraper ton retard.',
+    'Appelles une ou deux autres personnes, pour que personne ne gère ça seul.',
+    'Demandes ce que tu y gagnes avant de bouger.']],
+  q2: ['Quelqu’un de plus jeune que toi se fige devant la foule à qui il doit parler. Tu…', [
+    'Te places à côté de lui sans un mot.',
+    'Lui dis fermement de se ressaisir. Tout le monde regarde.',
+    'Le guides calmement : respire, regarde un seul visage, commence.',
+    'Le laisses se débrouiller. C’est comme ça qu’on apprend.']],
+  q3: ['Ça fait des semaines que tu essaies d’apprendre quelque chose de difficile, et ça ne marche toujours pas. Tu…', [
+    'Continues à t’entraîner, chaque jour, aussi longtemps qu’il le faudra.',
+    'Cherches un raccourci. Il y a toujours un moyen plus malin.',
     'Te plains bruyamment à qui veut l’entendre, puis continues quand même.',
-    'Décides que ce rocher est indigne de toi. Tu es fait·e pour de plus grandes choses.']],
-  q4: ['Après une mission éprouvante, ton escouade a enfin une soirée libre. Tu…', [
-    'Organises un festin et veilles à ce que tout le monde mange avant toi.',
-    'Vas t’entraîner seul·e au bord de la rivière.',
-    'Lances un défi bruyant et flamboyant… et le gagnes.',
-    'Restes assis·e tranquillement à écouter les autres parler.']],
-  q5: ['Un démon te propose un vrai pouvoir, en échange d’une petite trahison. Tu…', [
+    'Décides que ce n’est pas digne de toi. Tu es fait·e pour de plus grandes choses.']],
+  q4: ['Pour une fois, tous tes amis sont libres le même soir. Tu…', [
+    'Cuisines pour tout le monde et veilles à ce que chacun mange avant toi.',
+    'T’éclipses pour te consacrer à tes propres affaires, seul·e.',
+    'Lances un jeu ou un défi bruyant… et le gagnes.',
+    'Restes en retrait à écouter les autres parler.']],
+  q5: ['On te propose une belle opportunité, mais seulement si tu trahis un ami dans son dos. Tu…', [
     'Refuses aussitôt. Certaines limites ne bougent pas.',
-    'Lui éclates de rire au nez et attaques.',
-    'Hésites. Juste une seconde, tu te poses la question.',
-    'Fais semblant d’accepter, t’approches, puis frappes.']],
-  q6: ['Quelqu’un se moque de ton ami en pleine rue. Tu…', [
-    'L’attrapes par le col. Tout de suite.',
+    'Leur ris au nez et racontes tout à ton ami.',
+    'Hésites. Juste une seconde, tu es tenté·e.',
+    'Fais semblant d’accepter, puis retournes la situation contre eux.']],
+  q6: ['Quelqu’un se moque de ton ami devant un groupe. Tu…', [
+    'Te plantes devant lui. Tout de suite.',
     'Lâches une phrase glaciale qui clôt la discussion.',
-    'Fais une blague qui retourne toute la foule contre lui.',
-    'Continues ton chemin. Ce ne sont pas tes affaires.']],
-  q7: ['Le plan de mission qu’on t’a donné est clairement mauvais. Tu…', [
-    'Le suis quand même. Les ordres existent pour une raison.',
-    'L’ignores et règles ça à ta façon, seul·e.',
-    'Le réécris pendant la nuit et le présentes à l’équipe à l’aube.',
-    'Fonces et improvises. Les plans, c’est pour les prudents.']],
+    'Fais une blague qui retourne tout le monde contre lui.',
+    'Restes en dehors. Ce ne sont pas tes affaires.']],
+  q7: ['La personne qui décide (un aîné, un parent, un entraîneur, peu importe) te demande de faire quelque chose d’une façon que tu sais mauvaise. Tu…', [
+    'Le fais à sa façon quand même. Si c’est elle qui décide, il y a une raison.',
+    'L’ignores et le fais à ta façon, seul·e.',
+    'Prépares un meilleur plan et le lui montres avant de commencer.',
+    'Te lances et improvises. Les plans, c’est pour les prudents.']],
   q8: ['Quel compliment te toucherait le plus ?', [
     '« Personne n’est plus fort que toi. »',
     '« Tu ne laisses jamais personne tomber. »',
-    '« Avec toi, tout devient plus lumineux. »',
+    '« Tout est plus lumineux quand tu es là. »',
     '« Rien ne semble jamais t’ébranler. »']],
-  q9: ['Tu perds un duel devant tout le monde. Tu…', [
-    'Salues, remercies et demandes une revanche pour demain.',
+  q9: ['Tu perds devant tout le monde : un jeu, un match, une dispute. Tu…', [
+    'Félicites l’autre et demandes une revanche.',
     'Bouillonnes. Tu t’entraîneras jusqu’à l’écraser.',
-    'En ris. Le dîner t’attend.',
-    'Décides en silence qu’il n’y aura pas de revanche… ni de lui.']],
-  q10: ['Une vieille villageoise adorable te sert un plat que tu ne supportes vraiment pas. Tu…', [
-    'Manges jusqu’à la dernière bouchée et la remercies sincèrement.',
-    'Refuses poliment. L’honnêteté d’abord.',
-    'En fais une grande tragédie théâtrale.',
-    'Repousses le bol. Tu ne manges pas ce que tu n’aimes pas.']],
-  q11: ['En combat, ton approche préférée, c’est…', [
-    'Une force écrasante dès la première seconde.',
-    'La patience. Lire l’adversaire, attendre l’ouverture.',
-    'La vitesse et le chaos. Personne ne te voit venir.',
-    'Protéger ceux qui sont derrière toi passe avant la victoire.']],
-  q12: ['Un démon acculé implore ta pitié, en pleurant l’humain qu’il était. Tu…', [
-    'Lui accordes une fin paisible et dis une prière pour lui.',
-    'L’abats. Ses larmes ne rendront pas la vie à ses victimes.',
-    'Te figes. Tu n’arrives pas à le faire.',
-    'Poses d’abord des questions. Ce qu’il sait pourrait sauver des vies.']],
-  q13: ['La guerre est finie. Où vis-tu maintenant ?', [
-    'Dans une ville animée où tout le monde connaît ton nom.',
-    'Dans une cabane en montagne, loin de tout le monde.',
-    'Dans un grand domaine. Tu l’as bien mérité.',
-    'Dans un dojo, pour former la génération suivante.']],
-  q14: ['Un coéquipier s’attribue le démon que tu as tué. Tu…', [
-    'Laisses couler. Le démon n’est plus là, c’est tout ce qui compte.',
-    'Rétablis la vérité, haut et fort, devant tout le monde.',
-    'Es blessé·e en silence et ne dis rien.',
-    'Le retiens. Tu feras en sorte que ça n’arrive plus jamais.']],
+    'En ris. Le repas t’attend.',
+    'Décides en silence qu’il le paiera un jour.']],
+  q10: ['Une voisine âgée te sert fièrement un plat que tu ne supportes vraiment pas. Tu…', [
+    'Manges jusqu’à la dernière bouchée et la remercies chaleureusement.',
+    'Lui dis poliment que ce n’est pas pour toi. L’honnêteté d’abord.',
+    'En fais tout un drame en te forçant à finir.',
+    'Repousses l’assiette. Tu ne manges pas ce que tu n’aimes pas.']],
+  q11: ['Quand un désaccord tourne au vrai conflit, ta façon de faire, c’est…', [
+    'Frapper fort et vite, et régler ça tout de suite.',
+    'Rester patient·e : écouter, et attendre le bon moment.',
+    'Déstabiliser l’autre. Tu ne fais jamais ce qu’on attend.',
+    'Protéger d’abord ceux qui t’entourent. Gagner passe après.']],
+  q12: ['Quelqu’un qui a fait du mal à des gens que tu aimes s’effondre en larmes et te supplie de lui pardonner. Tu…', [
+    'Lui pardonnes, sincèrement.',
+    'T’en vas. Ses larmes n’effacent pas ce qu’il a fait.',
+    'Te figes. Tu ne sais plus quoi ressentir.',
+    'Poses d’abord des questions. Tu veux comprendre ce qui s’est passé.']],
+  q13: ['Si tu pouvais vivre n’importe où, pour de bon, tu choisirais…', [
+    'Un quartier animé où tout le monde connaît ton nom.',
+    'Un endroit calme, loin de tout le monde.',
+    'Une grande et belle maison. Tu l’aurais bien méritée.',
+    'Un endroit où tu peux enseigner et transmettre ce que tu sais.']],
+  q14: ['Quelqu’un s’attribue, devant tout le monde, quelque chose que tu as fait. Tu…', [
+    'Laisses couler. C’est fait, et c’est tout ce qui compte.',
+    'Rétablis la vérité, haut et fort, sur-le-champ.',
+    'Es blessé·e et ne dis rien.',
+    'Le retiens. Ça n’arrivera pas deux fois.']],
   q15: ['Qu’est-ce qui te fait le plus peur ?', [
     'Perdre les gens que tu aimes.',
     'Être oublié·e.',
-    'Mourir. Tu ferais n’importe quoi pour continuer à vivre.',
-    'Être faible au moment où ça compte enfin.']],
-  q16: ['Tu arrives en retard : trois pourfendeurs blessés, un démon encore debout. Tu…', [
-    'Mets d’abord les blessés à l’abri, puis reviens pour lui.',
-    'L’affrontes de face, seul·e, immédiatement.',
-    'Envoies chercher des renforts et tiens une ligne de défense.',
-    'Attends dans l’ombre qu’il baisse sa garde.']],
+    'Mourir. Tu ferais presque n’importe quoi pour rester en vie.',
+    'Être faible au moment où ça compte vraiment.']],
+  q16: ['Tout part en vrille autour de toi : des gens sont blessés, ça crie, ça panique. Tu…', [
+    'T’occupes d’abord des blessés, puis du reste.',
+    'Fonces droit sur le problème, seul·e, tout de suite.',
+    'Appelles à l’aide et organises tout le monde pour tenir le coup.',
+    'Restes en retrait et observes jusqu’à voir exactement où frapper.']],
   q17: ['Pour tes amis, en un mot, tu es…', [
     'Bruyant·e.',
     'Gentil·le.',
     'Mystérieux·se.',
     'Déterminé·e.']],
-  q18: ['Un festival arrive en ville pendant ton seul jour de repos. Tu…', [
+  q18: ['Une grande fête a lieu dans ton quartier pendant ton seul jour de repos. Tu…', [
     'Es premier·ère dans la file de chaque jeu et de chaque stand.',
     'Y vas, surtout pour garder un œil sur les plus jeunes.',
-    'N’y vas pas. L’entraînement ne prend pas de vacances.',
-    'Y vas seul·e et regardes les lanternes depuis un toit.']],
-  q19: ['Quelqu’un de bien plus fort que toi propose de t’entraîner, mais il est cruel. Tu…', [
-    'Acceptes. La force, c’est la force.',
+    'N’y vas pas. Tu as des choses à faire avancer.',
+    'Y vas seul·e et regardes tout depuis un coin tranquille.']],
+  q19: ['Quelqu’un de brillant dans ce que tu veux apprendre propose de t’enseigner, mais il est dur et cruel. Tu…', [
+    'Acceptes. Les résultats, c’est les résultats.',
     'Refuses. Tu trouveras ta propre voie.',
     'Acceptes, et essaies de l’adoucir en chemin.',
     'Acceptes, gardes la tête baissée et tiens bon.']],
-  q20: ['Le soleil se lève enfin après la plus longue nuit de ta vie. Tu ressens…', [
+  q20: ['Après la journée la plus longue et la plus dure depuis longtemps, tu te couches enfin. Tu ressens…', [
     'Une gratitude tranquille.',
     'La faim. Une faim immense.',
-    'L’envie d’en découdre à nouveau.',
-    'De l’agacement. C’est la nuit que tu te sentais au sommet de ta force.']],
+    'L’envie d’en découdre dès demain.',
+    'Un peu de regret que ce soit fini. C’est dans le chaos que tu te sens le plus vivant·e.']],
 };
 
 // [titre, blurb, { trait: phrase }]

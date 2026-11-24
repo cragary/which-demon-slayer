@@ -5,7 +5,7 @@ export const STRINGS = {
   pageDescription: '20 questions. 42 characters. Find your Slayer, your demon side, your breathing style and your Corps rank. Unofficial fan quiz.',
   pageTitleFor: (first) => `I'm ${first}! Which Demon Slayer Are You?`,
   crow: 'Caw! New recruit! Twenty questions stand between you and dawn.',
-  lede: "Answer like you would on a real mission. When the sun comes up, you'll learn which Slayer you're closest to, which demon lurks in your shadow, how you breathe and where you rank in the Corps.",
+  lede: "Answer as you really are, in your everyday life. When the sun comes up, you'll learn which Slayer you're closest to, which demon lurks in your shadow, how you breathe and where you rank in the Corps.",
   accept: 'Accept the mission',
   resume: 'Continue the mission',
   restart: 'Start over',

@@ -7,7 +7,7 @@ export const STRINGS_FR = {
   pageDescription: `20 questions. 42 personnages. Découvre ton Pourfendeur, ton côté démon, ton souffle et ton rang dans le Corps. Quiz de fan non officiel.`,
   pageTitleFor: (first) => `Je suis ${first}${s}! Quel personnage de Demon Slayer es-tu${s}?`,
   crow: `Croa${s}! Nouvelle recrue${s}! Vingt questions te séparent de l’aube.`,
-  lede: 'Réponds comme tu le ferais en vraie mission. Au lever du soleil, tu sauras de quel Pourfendeur tu es le plus proche, quel démon rôde dans ton ombre, quel souffle est le tien et quel est ton rang dans le Corps.',
+  lede: 'Réponds comme tu es vraiment, dans ta vie de tous les jours. Au lever du soleil, tu sauras de quel Pourfendeur tu es le plus proche, quel démon rôde dans ton ombre, quel souffle est le tien et quel est ton rang dans le Corps.',
   accept: 'Accepter la mission',
   resume: 'Reprendre la mission',
   restart: 'Recommencer',
