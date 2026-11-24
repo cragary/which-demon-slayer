@@ -1,0 +1,13 @@
+{
+  "name": "which-demon-slayer",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Unofficial fan quiz: which Demon Slayer are you?",
+  "scripts": {
+    "test": "node --test",
+    "balance": "node scripts/balance.js",
+    "build": "node scripts/build.js",
+    "serve": "npx --yes serve dist -l 4173"
+  }
+}
