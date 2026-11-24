@@ -40,8 +40,9 @@ export function badgeSvg(result, data, { format = 'portrait' } = {}) {
   ${t(580, 170, 30, STRINGS.title.toUpperCase(), { family: FONT_DISPLAY, fill: CRIMSON })}
   ${t(580, 255, 62, `I'm ${slayer.name.split(' ')[0]}!`, { family: FONT_DISPLAY })}
   ${t(580, 310, 34, slayer.title, { opacity: 0.8 })}
-  ${t(580, 400, 30, 'Slayer · Demon side · Breathing · Rank')}
-  ${t(580, 450, 30, 'Find yours in 20 questions →', { weight: 700, fill: CRIMSON })}
+  ${t(580, 400, 30, 'Your Slayer, your demon side,')}
+  ${t(580, 440, 30, 'your breathing and your rank.')}
+  ${t(580, 500, 30, 'Find yours in 20 questions.', { weight: 700, fill: CRIMSON })}
   ${t(580, 545, 24, host, { opacity: 0.6 })}
 </svg>`;
   }
@@ -64,7 +65,7 @@ export function badgeSvg(result, data, { format = 'portrait' } = {}) {
   ${emblemAt(slayer.id, 90, 230, 420)}
   ${t(300, 700, 30, STRINGS.slayerHeading.toUpperCase(), { family: FONT_DISPLAY, fill: CRIMSON, anchor: 'middle' })}
   ${t(300, 752, 44, slayer.name, { weight: 700, anchor: 'middle' })}
-  ${t(300, 796, 28, result.simSlayer ? `${slayer.title} · ${STRINGS.match(result.simSlayer)}` : slayer.title, { anchor: 'middle', opacity: 0.8 })}
+  ${t(300, 796, 28, result.simSlayer ? `${slayer.title}, ${STRINGS.match(result.simSlayer)}` : slayer.title, { anchor: 'middle', opacity: 0.8 })}
 
   ${demon ? `${emblemAt(demon.id, 640, 300, 320)}
   ${t(800, 700, 30, STRINGS.demonHeading.toUpperCase(), { family: FONT_DISPLAY, fill: CRIMSON, anchor: 'middle' })}
