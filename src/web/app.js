@@ -74,6 +74,10 @@ function boot() {
     const result = decodeResult(slayerId, new URLSearchParams(location.search), DATA);
     if (result) return showResult(result, { own: store.get('wds-own') === location.search });
   }
+  if (location.hash === '#quiz' && hasProgress()) {
+    history.replaceState(null, '', location.pathname + location.search);
+    return startQuiz({ resume: true });
+  }
   showLanding();
 }
 

@@ -1,5 +1,5 @@
 // One question at a time; progress survives reloads (sessionStorage).
-import { data as DATA, strings as STRINGS } from './i18n.js';
+import { data as DATA, strings as STRINGS, otherLangHref } from './i18n.js';
 import { escapeXml } from '../core/escape.js';
 import { render, setProgress } from './app.js';
 import { finishQuiz } from './result-view.js';
@@ -45,7 +45,14 @@ function slash() {
   setTimeout(() => s.remove(), 400);
 }
 
+/** While a quiz is running, the language switch carries #quiz so the other language resumes right here. */
+function pointSwitchAtQuiz() {
+  const sw = document.querySelector('.lang-switch');
+  if (sw) sw.href = `${otherLangHref().split('#')[0]}#quiz`;
+}
+
 function showQuestion() {
+  pointSwitchAtQuiz();
   const i = state.answers.length;
   if (i >= N) return showNameStep();
   setProgress(i / N);
@@ -97,6 +104,7 @@ addEventListener('popstate', (e) => {
 });
 
 function showNameStep() {
+  pointSwitchAtQuiz();
   setProgress(0.97);
   render(`
     <section class="enter">
