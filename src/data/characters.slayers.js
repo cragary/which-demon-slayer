@@ -196,7 +196,7 @@ export const SLAYERS = [
       composure: 'Like Kagaya, your voice calms a room full of the most dangerous people alive.',
       compassion: 'Like Kagaya, you remember every name and every sacrifice.',
       discipline: 'Like Kagaya, you see the whole board and plan accordingly.',
-      ruthlessness: 'Like Kagaya, behind the gentleness is a will that will pay any price for victory.',
+      ruthlessness: 'Like Kagaya, behind the gentleness is a will of iron.',
     }),
   ch('haganezuka', 'Hotaru Haganezuka', 'Swordsmith of terrifying passion', [1, 3, 10, 8, 10, 10, 5, 4], ['#2e86c1', '#f0b27a', '#212f3d'],
     'Obsessed with your craft and terrifying when it is disrespected, you are a genius with a temper.', {

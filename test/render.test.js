@@ -50,3 +50,24 @@ test('badgeSvg renders with resvg without throwing', async () => {
   const png = new Resvg(badgeSvg(result, DATA, { format: 'og' })).render().asPng();
   assert.ok(png.length > 1000);
 });
+
+test('badgeSvg squeezes a wide name into the canvas with textLength', () => {
+  const svg = badgeSvg({ ...result, name: '😀'.repeat(20) }, DATA, { format: 'portrait' });
+  const line = svg.split('\n').find((l) => l.includes('😀'));
+  const tl = Number(line.match(/textLength="(\d+)"/)?.[1]);
+  assert.ok(tl > 0 && tl <= 960, `textLength ${tl}`);
+  assert.match(line, /lengthAdjust="spacingAndGlyphs"/);
+});
+
+test('badgeSvg leaves a short name at natural width', () => {
+  const svg = badgeSvg({ ...result, name: 'Ana' }, DATA, { format: 'portrait' });
+  const line = svg.split('\n').find((l) => l.includes('Ana'));
+  assert.ok(!line.includes('textLength'));
+});
+
+test('badgeSvg fits long character titles within their column', () => {
+  const svg = badgeSvg({ ...result, slayer: 'urokodaki', demon: 'nakime' }, DATA, { format: 'portrait' });
+  const line = svg.split('\n').find((l) => l.includes('Former Water Hashira'));
+  const tl = Number(line.match(/textLength="(\d+)"/)?.[1]);
+  assert.ok(tl > 0 && tl <= 440, `title textLength ${tl}`);
+});

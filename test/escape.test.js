@@ -21,3 +21,10 @@ test('clampName trims whitespace and handles empty', () => {
   assert.equal(clampName('  '), '');
   assert.equal(clampName(undefined), '');
 });
+
+test('clampName caps combining marks per grapheme (zalgo)', () => {
+  const zalgo = 'a' + '́'.repeat(70) + 'b';
+  const out = clampName(zalgo);
+  assert.ok(out.length <= 5, `got ${out.length} code units`);
+  assert.ok(out.startsWith('a') && out.endsWith('b'));
+});

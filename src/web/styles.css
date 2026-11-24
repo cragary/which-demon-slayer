@@ -74,7 +74,7 @@ main {
   outline: none;
 }
 
-h1, h2, h3, .pixel { font-family: var(--pixel); font-weight: 400; letter-spacing: 0.01em; line-height: 1.2; }
+h1, h2, h3, .pixel { font-family: var(--pixel); font-weight: 400; letter-spacing: 0.01em; line-height: 1.2; overflow-wrap: anywhere; }
 h1 { font-size: clamp(var(--step-3), 8vw, var(--step-4)); margin: 0 0 1rem; }
 h2 { font-size: var(--step-2); margin: 0 0 0.75rem; }
 h3 { font-size: var(--step-1); margin: 0 0 0.5rem; }

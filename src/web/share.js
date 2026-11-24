@@ -13,7 +13,9 @@ async function embeddedFonts(root) {
   if (fontCss) return fontCss;
   const parts = await Promise.all(FONT_FILES.map(async ([family, weight, file]) => {
     try {
-      const buf = await (await fetch(`${root}fonts/${file}`)).arrayBuffer();
+      const res = await fetch(`${root}fonts/${file}`);
+      if (!res.ok) return '';
+      const buf = await res.arrayBuffer();
       let bin = '';
       const bytes = new Uint8Array(buf);
       for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode(...bytes.subarray(i, i + 0x8000));

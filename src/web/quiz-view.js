@@ -4,17 +4,18 @@ import { STRINGS } from '../data/strings.en.js';
 import { escapeXml } from '../core/escape.js';
 import { render, setProgress } from './app.js';
 import { finishQuiz } from './result-view.js';
+import { store } from './store.js';
 
 const KEY = 'wds-progress';
 const N = DATA.questions.length;
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 const load = () => {
-  try { return JSON.parse(sessionStorage.getItem(KEY)); } catch { return null; }
+  try { return JSON.parse(store.get(KEY)); } catch { return null; }
 };
-const save = (s) => sessionStorage.setItem(KEY, JSON.stringify(s));
+const save = (s) => store.set(KEY, JSON.stringify(s));
 export const hasProgress = () => (load()?.answers?.length ?? 0) > 0;
-export const clearProgress = () => sessionStorage.removeItem(KEY);
+export const clearProgress = () => store.remove(KEY);
 
 const shuffle = (arr) => {
   const a = [...arr];
@@ -33,6 +34,7 @@ export function startQuiz({ resume }) {
     state = { answers: [], order: Object.fromEntries(DATA.questions.map((q) => [q.id, shuffle(q.answers.map((a) => a.id))])), name: '' };
   }
   save(state);
+  history.replaceState({ wds: state.answers.length }, '');
   showQuestion();
 }
 
@@ -71,15 +73,29 @@ function pick(button) {
   button.classList.add('picked');
   state.answers.push(button.dataset.id);
   save(state);
+  history.pushState({ wds: state.answers.length }, '');
   slash();
   setTimeout(() => { pick.busy = false; showQuestion(); }, reduced ? 0 : 220);
 }
 
+/** In-app Back mirrors the browser's, so both stay in step. */
 function back() {
+  if (history.state?.wds > 0) history.back();
+  else stepBack();
+}
+
+function stepBack() {
   state.answers.pop();
   save(state);
   showQuestion();
 }
+
+addEventListener('popstate', (e) => {
+  if (!state || typeof e.state?.wds !== 'number') return;
+  while (state.answers.length > e.state.wds) state.answers.pop();
+  save(state);
+  showQuestion();
+});
 
 function showNameStep() {
   setProgress(0.97);

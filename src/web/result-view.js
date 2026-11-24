@@ -8,6 +8,7 @@ import { encodeResult } from '../core/share-url.js';
 import { escapeXml, clampName } from '../core/escape.js';
 import { render, setProgress, toast, siteRoot, emblemUrl } from './app.js';
 import { clearProgress } from './quiz-view.js';
+import { store } from './store.js';
 import { badgeSvgWithFonts, svgToPngBlob, downloadBlob, copyText, shareFile, intentLinks } from './share.js';
 
 const root = document.body.dataset.root || './';
@@ -28,9 +29,9 @@ export function finishQuiz(state) {
     traits: s.traits,
   };
   // Keep the full detail (answers, runner-ups) for this tab; the URL carries the shareable part.
-  sessionStorage.setItem('wds-detail', JSON.stringify({ answers: state.answers, runnerSlayer: slayers[1].id, runnerDemon: demons[1].id }));
+  store.set('wds-detail', JSON.stringify({ answers: state.answers, runnerSlayer: slayers[1].id, runnerDemon: demons[1].id }));
   const path = encodeResult(result);
-  sessionStorage.setItem('wds-own', path.slice(path.indexOf('?')));
+  store.set('wds-own', path.slice(path.indexOf('?')));
   clearProgress();
   location.href = new URL(path, siteRoot()).href;
 }
@@ -48,7 +49,7 @@ export async function showResult(result, { own }) {
   setProgress(1);
   let detail = null;
   if (own) {
-    try { detail = JSON.parse(sessionStorage.getItem('wds-detail')); } catch { detail = null; }
+    try { detail = JSON.parse(store.get('wds-detail')); } catch { detail = null; }
   }
   const slayer = charById(result.slayer);
   const demon = result.demon && charById(result.demon);
@@ -81,7 +82,7 @@ export async function showResult(result, { own }) {
           <h2 class="who">${escapeXml(slayer.name)}</h2>
           <p class="title">${escapeXml(slayer.title)}</p>
           ${whyList(slayerWhy)}
-          ${detail?.runnerSlayer ? `<p class="runner">${STRINGS.runnerUp(charById(detail.runnerSlayer).name)}</p>` : ''}
+          ${charById(detail?.runnerSlayer) ? `<p class="runner">${escapeXml(STRINGS.runnerUp(charById(detail.runnerSlayer).name))}</p>` : ''}
         </div>
       </article>
 
@@ -92,7 +93,7 @@ export async function showResult(result, { own }) {
           <h2 class="who">${escapeXml(demon.name)}</h2>
           <p class="title">${escapeXml(demon.title)}</p>
           ${whyList(why(demon, demonPool))}
-          ${detail?.runnerDemon ? `<p class="runner">${STRINGS.runnerUp(charById(detail.runnerDemon).name)}</p>` : ''}
+          ${charById(detail?.runnerDemon) ? `<p class="runner">${escapeXml(STRINGS.runnerUp(charById(detail.runnerDemon).name))}</p>` : ''}
         </div>
       </article>` : ''}
 
@@ -124,19 +125,26 @@ export async function showResult(result, { own }) {
   const img = document.getElementById('badge');
   img.src = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml' }));
   const filename = `demon-slayer-${slayer.id}${demon ? `-${demon.id}` : ''}.png`;
-  let png;
-  const getPng = async () => (png ??= await svgToPngBlob(svg, 1080, 1350));
+  // Rasterise right away so Share can call navigator.share() inside the tap (iOS drops slow gestures).
+  const pngPromise = svgToPngBlob(svg, 1080, 1350);
+  pngPromise.catch(() => {});
+  const getPng = async () => {
+    try { return await pngPromise; } catch { toast(STRINGS.badgeFailed); return null; }
+  };
 
-  document.getElementById('download').onclick = async () => downloadBlob(await getPng(), filename);
+  document.getElementById('download').onclick = async () => {
+    const blob = await getPng();
+    if (blob) downloadBlob(blob, filename);
+  };
   document.getElementById('copy').onclick = async () => toast((await copyText(shareUrl)) ? STRINGS.copied : shareUrl);
   document.getElementById('print').onclick = () => window.print();
   document.getElementById('share').onclick = async () => {
     const blob = await getPng();
+    if (!blob) return;
     const r = await shareFile(blob, filename, shareText, shareUrl);
     if (r) return;
     downloadBlob(blob, filename);
-    await copyText(`${shareText} ${shareUrl}`);
-    toast(STRINGS.downloaded);
+    toast((await copyText(`${shareText} ${shareUrl}`)) ? STRINGS.downloaded : STRINGS.downloadedNoCopy(shareUrl));
   };
 }
 

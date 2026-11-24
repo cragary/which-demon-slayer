@@ -24,6 +24,8 @@ export const STRINGS = {
   takeIt: 'Take the quiz',
   copied: 'Link copied!',
   downloaded: 'Badge downloaded. Link copied too, so paste it with your post.',
+  downloadedNoCopy: (url) => `Badge downloaded. Share it with this link: ${url}`,
+  badgeFailed: 'The badge could not be drawn in this browser. Try Copy link instead.',
   sharedText: (slayer, demon) => `I got ${slayer}${demon ? ` (and my demon side is ${demon})` : ''}! Which Demon Slayer are you?`,
   someoneGot: (name, slayer) => `${name ? `${name} got` : 'This result:'} ${slayer}`,
   myResult: 'My result',

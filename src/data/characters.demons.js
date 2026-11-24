@@ -17,7 +17,7 @@ export const DEMONS = [
     }),
   dm('kokushibo', 'Kokushibo', 'Upper Moon One', [9, 1, 3, 0, 10, 8, 7, 8], ['#4a235a', '#b03a2e', '#f4d03f'],
     'Your demon side is a perfectionist that will trade anything to become the very best.', {
-      discipline: 'Your demon side, like Kokushibo, trains for centuries if that is what perfection costs.',
+      discipline: 'Your demon side, like Kokushibo, trains without rest if that is what perfection costs.',
       ambition: 'Your demon side, like Kokushibo, cannot stand being second, to anyone.',
       composure: 'Your demon side, like Kokushibo, is cold, controlled and very hard to rattle.',
       independence: 'Your demon side, like Kokushibo, walks alone and prefers it.',
@@ -71,7 +71,7 @@ export const DEMONS = [
       ruthlessness: 'Your demon side, like Kaigaku, looks down on anyone it considers weaker.',
       intensity: 'Your demon side, like Kaigaku, crackles with barely-contained anger.',
     }),
-  dm('nakime', 'Nakime', 'The biwa player of the Infinity Castle', [8, 0, 1, 1, 5, 9, 3, 7], ['#4a235a', '#d4ac0d', '#1b1b1b'],
+  dm('nakime', 'Nakime', 'The biwa demon', [8, 0, 1, 1, 5, 9, 3, 7], ['#4a235a', '#d4ac0d', '#1b1b1b'],
     'Your demon side is silent, precise and quietly runs the whole operation.', {
       composure: 'Your demon side, like Nakime, never says a word more than necessary.',
       discipline: 'Your demon side, like Nakime, keeps everything running with a single, perfect note.',

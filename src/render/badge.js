@@ -1,6 +1,6 @@
 // Badge SVG templates. The same string is rasterised in the browser (canvas) and at build time (resvg).
 import { TRAITS } from '../core/traits.js';
-import { escapeXml, clampName } from '../core/escape.js';
+import { escapeXml, clampName, estimateEm } from '../core/escape.js';
 import { emblemAt } from './emblem.js';
 import { STRINGS } from '../data/strings.en.js';
 import { BASE_URL } from '../config.js';
@@ -11,8 +11,11 @@ const INK = '#1b1714';
 const PAPER = '#f3ead8';
 const CRIMSON = '#a4161a';
 
-const t = (x, y, size, text, { family = FONT_BODY, weight = 400, fill = INK, anchor = 'start', opacity } = {}) =>
-  `<text x="${x}" y="${y}" font-family="${family}, serif" font-size="${size}" font-weight="${weight}" fill="${fill}" text-anchor="${anchor}"${opacity ? ` opacity="${opacity}"` : ''}>${escapeXml(text)}</text>`;
+/** SVG text; with `max`, text estimated wider than `max` px is force-fitted via textLength. */
+const t = (x, y, size, text, { family = FONT_BODY, weight = 400, fill = INK, anchor = 'start', opacity, max } = {}) => {
+  const fit = max && estimateEm(text) * size > max ? ` textLength="${max}" lengthAdjust="spacingAndGlyphs"` : '';
+  return `<text x="${x}" y="${y}" font-family="${family}, serif" font-size="${size}" font-weight="${weight}" fill="${fill}" text-anchor="${anchor}"${opacity ? ` opacity="${opacity}"` : ''}${fit}>${escapeXml(text)}</text>`;
+};
 
 const frame = (w, h) => `
   <rect width="${w}" height="${h}" fill="${PAPER}"/>
@@ -39,7 +42,7 @@ export function badgeSvg(result, data, { format = 'portrait' } = {}) {
   ${emblemAt(slayer.id, 80, 95, 440)}
   ${t(580, 170, 30, STRINGS.title.toUpperCase(), { family: FONT_DISPLAY, fill: CRIMSON })}
   ${t(580, 255, 62, `I'm ${slayer.name.split(' ')[0]}!`, { family: FONT_DISPLAY })}
-  ${t(580, 310, 34, slayer.title, { opacity: 0.8 })}
+  ${t(580, 310, 34, slayer.title, { opacity: 0.8, max: 560 })}
   ${t(580, 400, 30, 'Your Slayer, your demon side,')}
   ${t(580, 440, 30, 'your breathing and your rank.')}
   ${t(580, 500, 30, 'Find yours in 20 questions.', { weight: 700, fill: CRIMSON })}
@@ -60,25 +63,25 @@ export function badgeSvg(result, data, { format = 'portrait' } = {}) {
   ${frame(W, H)}
   <rect x="32" y="32" width="${W - 64}" height="96" fill="${INK}"/>
   ${t(W / 2, 96, 40, STRINGS.title.toUpperCase(), { family: FONT_DISPLAY, fill: PAPER, anchor: 'middle' })}
-  ${t(W / 2, 190, 36, name ? STRINGS.resultOf(name) : STRINGS.myResult, { anchor: 'middle', opacity: 0.85 })}
+  ${t(W / 2, 190, 36, name ? STRINGS.resultOf(`⁨${name}⁩`) : STRINGS.myResult, { anchor: 'middle', opacity: 0.85, max: 960 })}
 
   ${emblemAt(slayer.id, 90, 230, 420)}
   ${t(300, 700, 30, STRINGS.slayerHeading.toUpperCase(), { family: FONT_DISPLAY, fill: CRIMSON, anchor: 'middle' })}
-  ${t(300, 752, 44, slayer.name, { weight: 700, anchor: 'middle' })}
-  ${t(300, 792, 24, slayer.title, { anchor: 'middle', opacity: 0.8 })}
+  ${t(300, 752, 44, slayer.name, { weight: 700, anchor: 'middle', max: 440 })}
+  ${t(300, 792, 24, slayer.title, { anchor: 'middle', opacity: 0.8, max: 440 })}
   ${result.simSlayer ? t(300, 830, 24, STRINGS.match(result.simSlayer), { anchor: 'middle', fill: CRIMSON }) : ''}
 
   ${demon ? `${emblemAt(demon.id, 640, 300, 320)}
   ${t(800, 700, 30, STRINGS.demonHeading.toUpperCase(), { family: FONT_DISPLAY, fill: CRIMSON, anchor: 'middle' })}
-  ${t(800, 752, 40, demon.name, { weight: 700, anchor: 'middle' })}
-  ${t(800, 792, 24, demon.title, { anchor: 'middle', opacity: 0.8 })}
+  ${t(800, 752, 40, demon.name, { weight: 700, anchor: 'middle', max: 440 })}
+  ${t(800, 792, 24, demon.title, { anchor: 'middle', opacity: 0.8, max: 440 })}
   ${result.simDemon ? t(800, 830, 24, STRINGS.match(result.simDemon), { anchor: 'middle', fill: CRIMSON }) : ''}` : ''}
 
   <line x1="90" y1="868" x2="${W - 90}" y2="868" stroke="${INK}" stroke-width="2" opacity="0.4"/>
   ${breathing ? `<rect x="110" y="900" width="26" height="26" fill="${breathing.color}"/>
   ${t(150, 924, 34, `${breathing.name}`, { weight: 700 })}` : ''}
   ${rank ? `${t(W - 110, 924, 34, `Rank: ${rank.name}`, { weight: 700, anchor: 'end' })}` : ''}
-  ${rank ? t(W / 2, 982, 26, rank.line, { anchor: 'middle', opacity: 0.75 }) : ''}
+  ${rank ? t(W / 2, 982, 26, rank.line, { anchor: 'middle', opacity: 0.75, max: 900 }) : ''}
 
   ${bars}
 

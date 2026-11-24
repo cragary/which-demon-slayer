@@ -6,6 +6,7 @@ import { MOTIFS } from '../data/emblems.js';
 import { emblemSvg } from '../render/emblem.js';
 import { startQuiz, hasProgress } from './quiz-view.js';
 import { showResult } from './result-view.js';
+import { store } from './store.js';
 
 const app = document.getElementById('app');
 const root = document.body.dataset.root || './';
@@ -71,7 +72,7 @@ function boot() {
   const slayerId = document.body.dataset.slayer;
   if (slayerId && !slayerId.startsWith('%')) {
     const result = decodeResult(slayerId, new URLSearchParams(location.search), DATA);
-    if (result) return showResult(result, { own: sessionStorage.getItem('wds-own') === location.search });
+    if (result) return showResult(result, { own: store.get('wds-own') === location.search });
   }
   showLanding();
 }
