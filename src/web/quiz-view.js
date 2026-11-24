@@ -4,6 +4,7 @@ import { escapeXml } from '../core/escape.js';
 import { render, setProgress } from './app.js';
 import { finishQuiz } from './result-view.js';
 import { store } from './store.js';
+import { backGoesToHistory } from '../core/lang-path.js';
 
 const KEY = 'wds-progress';
 const N = DATA.questions.length;
@@ -14,6 +15,8 @@ const load = () => {
 };
 const save = (s) => store.set(KEY, JSON.stringify(s));
 export const hasProgress = () => (load()?.answers?.length ?? 0) > 0;
+/** A quiz was started in this tab (even with no answers yet), so a language switch can resume it. */
+export const hasQuiz = () => Array.isArray(load()?.answers);
 export const clearProgress = () => store.remove(KEY);
 
 const shuffle = (arr) => {
@@ -26,6 +29,7 @@ const shuffle = (arr) => {
 };
 
 let state;
+let baseDepth = 0; // answers already given when this page started (resume or language switch)
 
 export function startQuiz({ resume }) {
   state = resume && load();
@@ -33,6 +37,7 @@ export function startQuiz({ resume }) {
     state = { answers: [], order: Object.fromEntries(DATA.questions.map((q) => [q.id, shuffle(q.answers.map((a) => a.id))])), name: '' };
   }
   save(state);
+  baseDepth = state.answers.length;
   history.replaceState({ wds: state.answers.length }, '');
   showQuestion();
 }
@@ -86,13 +91,15 @@ function pick(button) {
 
 /** In-app Back mirrors the browser's, so both stay in step. */
 function back() {
-  if (history.state?.wds > 0) history.back();
+  if (backGoesToHistory(history.state?.wds, baseDepth)) history.back();
   else stepBack();
 }
 
 function stepBack() {
   state.answers.pop();
   save(state);
+  baseDepth = Math.min(baseDepth, state.answers.length);
+  history.replaceState({ wds: state.answers.length }, '');
   showQuestion();
 }
 

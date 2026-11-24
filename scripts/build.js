@@ -9,6 +9,7 @@ import { BASE_URL, BASE_PATH } from '../src/config.js';
 import { badgeSvg } from '../src/render/badge.js';
 import { emblemAt, emblemSvg } from '../src/render/emblem.js';
 import { escapeXml } from '../src/core/escape.js';
+import { isFrPath } from '../src/core/lang-path.js';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const DIST = join(ROOT, 'dist');
@@ -104,7 +105,7 @@ for (const lang of LANGS) {
 
 // GitHub Pages serves this for any unknown path: send /fr/... to the French home, the rest to English.
 writeFileSync(join(DIST, '404.html'), `<!doctype html><meta charset="utf-8"><title>Demon Slayer quiz</title>
-<script>location.replace(${JSON.stringify(BASE_PATH)} + (/\/fr(\/|$)/.test(location.pathname) ? 'fr/' : ''));</script>
+<script>const isFrPath = ${isFrPath.toString()}; location.replace(${JSON.stringify(BASE_PATH)} + (isFrPath(location.pathname, ${JSON.stringify(BASE_PATH)}) ? 'fr/' : ''));</script>
 <meta http-equiv="refresh" content="1; url=${BASE_PATH}"><a href="${BASE_PATH}">English</a> · <a href="${BASE_PATH}fr/">Français</a>`);
 
 console.log(`built ${count} result pages and ${count + LANGS.length} OG images in ${LANGS.length} languages → dist/`);

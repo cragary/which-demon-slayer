@@ -3,7 +3,7 @@ import { data as DATA, strings as STRINGS, lang, otherLangHref } from './i18n.js
 import { decodeResult } from '../core/share-url.js';
 import { MOTIFS } from '../data/emblems.js';
 import { emblemSvg } from '../render/emblem.js';
-import { startQuiz, hasProgress } from './quiz-view.js';
+import { startQuiz, hasProgress, hasQuiz } from './quiz-view.js';
 import { showResult } from './result-view.js';
 import { store } from './store.js';
 import { escapeXml } from '../core/escape.js';
@@ -74,7 +74,7 @@ function boot() {
     const result = decodeResult(slayerId, new URLSearchParams(location.search), DATA);
     if (result) return showResult(result, { own: store.get('wds-own') === location.search });
   }
-  if (location.hash === '#quiz' && hasProgress()) {
+  if (location.hash === '#quiz' && hasQuiz()) {
     history.replaceState(null, '', location.pathname + location.search);
     return startQuiz({ resume: true });
   }

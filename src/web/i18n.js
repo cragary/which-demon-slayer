@@ -1,5 +1,6 @@
 // Page language (written by the build as <body data-lang>), the matching data/strings, and URL helpers.
 import { dataFor, stringsFor } from '../data/index.js';
+import { swapLangHref } from '../core/lang-path.js';
 
 export const lang = document.body.dataset.lang === 'fr' ? 'fr' : 'en';
 export const data = dataFor(lang);
@@ -14,8 +15,4 @@ export const siteRoot = () => new URL(root, location.href).href;
 export const langRoot = () => siteRoot() + (lang === 'fr' ? 'fr/' : '');
 
 /** Same page in the other language, keeping the query string (so a result stays the same result). */
-export function otherLangHref() {
-  const base = siteRoot();
-  const rel = location.href.startsWith(base) ? location.href.slice(base.length) : '';
-  return base + (lang === 'fr' ? rel.replace(/^fr\//, '') : `fr/${rel}`);
-}
+export const otherLangHref = () => swapLangHref(location.href, siteRoot(), lang);

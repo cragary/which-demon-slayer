@@ -6,7 +6,7 @@ const typo = (s) => s.replace(/ ([?!:;»])/g, ' $1').replace(/« /g, '« ');
 const Q = {
   q1: ['Minuit. Ton corbeau se pose sur le rebord de la fenêtre en hurlant : mission urgente, deux villages plus loin. Tu…', [
     'Es déjà habillé·e. Tu as dormi en uniforme, de toute façon.',
-    'Supplies pour cinq minutes de plus, puis cours tout le trajet pour te rattraper.',
+    'Supplies qu’on te laisse cinq minutes de plus, puis cours tout le trajet pour rattraper ton retard.',
     'Réveilles les autres. Personne ne part seul dans le noir.',
     'Y vas, mais demandes d’abord au corbeau ce que tu y gagnes.']],
   q2: ['Une nouvelle recrue se fige face à un démon. Tu…', [
@@ -40,7 +40,7 @@ const Q = {
     'Le réécris pendant la nuit et le présentes à l’équipe à l’aube.',
     'Fonces et improvises. Les plans, c’est pour les prudents.']],
   q8: ['Quel compliment te toucherait le plus ?', [
-    '« Tu es le plus fort. »',
+    '« Personne n’est plus fort que toi. »',
     '« Tu ne laisses jamais personne tomber. »',
     '« Avec toi, tout devient plus lumineux. »',
     '« Rien ne semble jamais t’ébranler. »']],
@@ -84,7 +84,7 @@ const Q = {
     'L’affrontes de face, seul·e, immédiatement.',
     'Envoies chercher des renforts et tiens une ligne de défense.',
     'Attends dans l’ombre qu’il baisse sa garde.']],
-  q17: ['Tes amis te décriraient en un mot comme…', [
+  q17: ['Pour tes amis, en un mot, tu es…', [
     'Bruyant·e.',
     'Gentil·le.',
     'Mystérieux·se.',
@@ -102,153 +102,153 @@ const Q = {
   q20: ['Le soleil se lève enfin après la plus longue nuit de ta vie. Tu ressens…', [
     'Une gratitude tranquille.',
     'La faim. Une faim immense.',
-    'Tu penses déjà au prochain combat.',
-    'De l’agacement. C’est la nuit que tu te sentais le plus fort·e.']],
+    'L’envie d’en découdre à nouveau.',
+    'De l’agacement. C’est la nuit que tu te sentais au sommet de ta force.']],
 };
 
 // [titre, blurb, { trait: phrase }]
 const C = {
-  tanjiro: ['Bretteur au cœur d’eau et de soleil', 'Gentil jusqu’à l’os et têtu comme une montagne, tu continues bien après que tout le monde aurait abandonné.', {
+  tanjiro: ['Bretteur au cœur d’eau et de soleil', 'Bonté à toute épreuve et tête dure comme une montagne : tu continues longtemps après que les autres ont abandonné.', {
     compassion: 'Comme Tanjiro, tu ressens la douleur des autres comme la tienne, même celle de ton ennemi.',
     discipline: 'Comme Tanjiro, tu crois que le travail bat le talent, et tu le prouves chaque jour.',
     composure: 'Comme Tanjiro, tu gardes la tête claire quand il le faut et tu flaires ce que les autres ratent.',
     intensity: 'Comme Tanjiro, un feu couve sous ta gentillesse, et il se voit quand on menace ceux que tu aimes.' }],
-  nezuko: ['Le démon qui protège les humains', 'Douce, féroce et loyale au-delà des mots : tu protèges les tiens d’abord, et tu ne poses jamais de questions.', {
+  nezuko: ['Le démon qui protège les humains', 'Douceur, férocité et une loyauté sans mots : tu protèges les tiens d’abord, et tu ne poses jamais de questions.', {
     compassion: 'Comme Nezuko, tu te placerais entre ta famille et n’importe quoi, sans explication.',
     intensity: 'Comme Nezuko, on te sous-estime… jusqu’à ce que tu enfonces la porte.',
     composure: 'Comme Nezuko, tu restes étonnamment calme, même quand tout part en vrille autour de toi.',
     playfulness: 'Comme Nezuko, tu as un côté doux et joueur qui détend tout le monde.' }],
-  zenitsu: ['Souffle de la Foudre, Première Forme uniquement', 'Bruyant, peureux et secrètement brillant, tu te plains tout le trajet… puis tu sauves la situation quand même.', {
+  zenitsu: ['Souffle de la Foudre, Première Forme uniquement', 'Du bruit, de la peur et un talent caché : tu te plains tout le trajet… puis tu sauves la situation quand même.', {
     compassion: 'Comme Zenitsu, ton cœur est immense, surtout pour ceux qui ont été gentils avec toi.',
     playfulness: 'Comme Zenitsu, tu transformes chaque crise en tragédie théâtrale, et on t’adore pour ça.',
     composure: 'Comme Zenitsu, la panique est ta langue maternelle… mais quand ça compte vraiment, quelque chose en toi devient silencieux et redoutable.',
     independence: 'Comme Zenitsu, tu donnes le meilleur de toi quand personne ne regarde.' }],
-  inosuke: ['Souffle de la Bête, roi de la montagne', 'Sauvage, compétitif et impossible à ignorer, tu fonces tête baissée sur chaque défi, et sur chaque adversaire.', {
+  inosuke: ['Souffle de la Bête, roi de la montagne', 'Sauvage et impossible à ignorer, tu fonces tête baissée sur chaque défi, et sur chaque adversaire.', {
     intensity: 'Comme Inosuke, tu réponds à chaque problème en chargeant à pleine puissance. La subtilité, c’est pour les autres.',
     independence: 'Comme Inosuke, personne ne t’a appris les règles, et ça se voit.',
-    ambition: 'Comme Inosuke, tu dois être le plus fort, et tu l’annonces à qui veut l’entendre.',
+    ambition: 'Comme Inosuke, il te faut être au sommet, et tu l’annonces à qui veut l’entendre.',
     playfulness: 'Comme Inosuke, tu es chaotique, drôle et totalement sincère.' }],
-  kanao: ['Souffle de la Fleur, l’épéiste à la pièce', 'Discrète, précise et trouvant peu à peu ta propre voix, tu vois bien plus que tu ne le dis.', {
+  kanao: ['Souffle de la Fleur, l’épéiste qui s’en remet à pile ou face', 'Discrétion, précision et une voix qui se trouve peu à peu : tu vois bien plus que tu ne le dis.', {
     composure: 'Comme Kanao, ton visage reste calme et ton regard affûté, quoi qu’il se passe en toi.',
     discipline: 'Comme Kanao, tu t’entraînes avec une précision qui laisse les autres derrière, sans bruit.',
-    independence: 'Comme Kanao, tu gardes tes pensées pour toi, même entourée de monde.',
+    independence: 'Comme Kanao, tu gardes tes pensées pour toi, même au milieu des autres.',
     compassion: 'Comme Kanao, ton cœur s’ouvre, un petit choix courageux à la fois.' }],
   genya: ['Le pourfendeur qui se bat à sa façon', 'Des angles durs, un cœur tendre caché et un besoin brûlant de faire tes preuves : tu ne prends jamais le chemin facile.', {
     intensity: 'Comme Genya, tu y vas à fond, à chaque fois, quitte à inquiéter ceux qui t’entourent.',
     ambition: 'Comme Genya, tu veux désespérément faire tes preuves auprès d’une personne qui compte.',
     independence: 'Comme Genya, tu as trouvé ta propre voie quand la voie habituelle t’était fermée.',
     compassion: 'Comme Genya, derrière ton air renfrogné se cache quelqu’un qui tient profondément aux autres.' }],
-  aoi: ['Le pilier du Domaine des Papillons', 'Organisée, franche et secrètement adorable, tu fais tourner les choses (et les gens).', {
+  aoi: ['La cheville ouvrière du Domaine des Papillons', 'Organisation, franchise et un cœur tendre bien caché : tu fais tourner les choses (et les gens).', {
     discipline: 'Comme Aoi, tu tiens tout d’une main ferme : horaires, règles, chaque chose à sa place.',
     compassion: 'Comme Aoi, tu montres que tu tiens aux gens en t’assurant qu’ils prennent vraiment leurs médicaments.',
-    independence: 'Comme Aoi, tu es plus heureuse dans une équipe qui compte sur toi.',
+    independence: 'Comme Aoi, tu donnes le meilleur de toi dans une équipe qui compte sur toi.',
     intensity: 'Comme Aoi, tu n’as aucune patience pour les bêtises, et tu le dis.' }],
-  murata: ['Le pourfendeur le plus normal du monde', 'Fiable, attachant et toujours là, tu es la personne qu’on oublie de remercier.', {
-    compassion: 'Comme Murata, tu es gentil de mille petites façons qu’on ne remarque qu’après coup.',
+  murata: ['Le pourfendeur le plus normal du monde', 'Fiable et toujours là, tu es la personne qu’on oublie de remercier.', {
+    compassion: 'Comme Murata, ta gentillesse passe par mille petits gestes qu’on ne remarque qu’après coup.',
     playfulness: 'Comme Murata, tu sais rire de toi-même, ce qui est plus rare que n’importe quel souffle.',
     discipline: 'Comme Murata, tu es toujours au rendez-vous. C’est ton super-pouvoir.',
     independence: 'Comme Murata, tu donnes le meilleur de toi aux côtés des autres, jamais sous les projecteurs.' }],
-  sabito: ['L’élève d’Urokodaki au masque de renard', 'Exigeant parce que tu tiens aux autres, tu les pousses fort pour qu’ils rentrent vivants.', {
+  sabito: ['L’élève d’Urokodaki au masque de renard', 'Tu exiges beaucoup parce que tu tiens aux autres : tu les pousses fort pour qu’ils rentrent vivants.', {
     discipline: 'Comme Sabito, tu crois à l’entraînement jusqu’à la douleur, et tu attends la même chose des autres.',
     compassion: 'Comme Sabito, ta dureté est en fait une promesse : je veux que tu survives.',
     composure: 'Comme Sabito, tu parles franchement et restes calme quand les autres s’affolent.',
     intensity: 'Comme Sabito, tu ne laisses personne se contenter de moins que son meilleur.' }],
-  makomo: ['La douce élève d’Urokodaki au masque de renard', 'Posée et sage, tu enseignes par l’exemple calme et un sourire au bon moment.', {
+  makomo: ['La douce élève d’Urokodaki au masque de renard', 'Calme et sage, tu enseignes par l’exemple et un sourire au bon moment.', {
     compassion: 'Comme Makomo, tu encourages les gens avec douceur jusqu’à ce qu’ils croient en eux.',
     composure: 'Comme Makomo, ton calme est contagieux : on respire mieux près de toi.',
     discipline: 'Comme Makomo, tu sais que la technique compte plus que la force brute.',
     playfulness: 'Comme Makomo, une étincelle espiègle brille derrière ta patience.' }],
-  urokodaki: ['Ancien Pilier de l’Eau, mentor au masque de tengu', 'Strict, sage et discrètement affectueux, tu es le mentor qui croit en les gens avant eux.', {
+  urokodaki: ['Ancien Pilier de l’Eau, mentor au masque de tengu', 'Sévérité, sagesse et tendresse discrète : tu es le mentor qui croit aux gens avant qu’ils ne croient en eux-mêmes.', {
     discipline: 'Comme Urokodaki, tes exigences sont brutales, et elles forgent des légendes.',
     composure: 'Comme Urokodaki, ton visage ne laisse rien paraître (autant porter un masque).',
     compassion: 'Comme Urokodaki, chaque leçon difficile que tu donnes est un acte d’amour.',
-    independence: 'Comme Urokodaki, tu es heureux sur ta montagne, loin du bruit.' }],
-  jigoro: ['Ancien Pilier de la Foudre, le grand-père sévère', 'Bruyant, strict et infiniment patient au fond, tu n’abandonnes jamais personne.', {
-    compassion: 'Comme Jigoro, tu refuses d’abandonner les gens, même quand ils ont abandonné eux-mêmes.',
+    independence: 'Comme Urokodaki, tu te sens bien sur ta montagne, loin du bruit.' }],
+  jigoro: ['Ancien Pilier de la Foudre, le grand-père sévère', 'Du bruit, de la rigueur et une patience infinie au fond : tu n’abandonnes jamais personne.', {
+    compassion: 'Comme Jigoro, tu refuses d’abandonner les gens, même quand ils ont baissé les bras.',
     discipline: 'Comme Jigoro, tu répètes les bases jusqu’à ce qu’elles deviennent la foudre.',
     intensity: 'Comme Jigoro, tu cries parce que tu tiens aux autres.',
     playfulness: 'Comme Jigoro, tu as l’humour d’un grand-parent, canne comprise.' }],
-  kanae: ['Ancien Pilier de la Fleur', 'Chaleureuse, sereine et bienveillante même envers ceux qui le méritent le moins, tu crois que chacun peut devenir meilleur.', {
+  kanae: ['Ancien Pilier de la Fleur', 'Chaleur, sérénité et bienveillance, même envers ceux qui la méritent le moins : tu crois que chacun peut devenir meilleur.', {
     compassion: 'Comme Kanae, tu crois que même les pires d’entre nous méritent une chance.',
     composure: 'Comme Kanae, ta douceur est une force qui ne se brise jamais.',
     playfulness: 'Comme Kanae, tu souris facilement, et sincèrement.',
     discipline: 'Comme Kanae, tu maintiens des exigences élevées avec délicatesse.' }],
-  senjuro: ['Le cadet des Rengoku', 'Doux, sincère et plus courageux que tu ne le crois, tu continues d’essayer même quand le talent ne vient pas facilement.', {
-    compassion: 'Comme Senjuro, tu es doux avec tout le monde, surtout avec ceux qui souffrent.',
+  senjuro: ['Le cadet des Rengoku', 'Douceur, sincérité et plus de courage que tu ne le crois : tu continues d’essayer même quand le talent ne vient pas facilement.', {
+    compassion: 'Comme Senjuro, tu fais preuve de douceur avec tout le monde, surtout avec ceux qui souffrent.',
     discipline: 'Comme Senjuro, tu continues de t’entraîner, même quand tu as l’impression que ça ne marche pas.',
     independence: 'Comme Senjuro, tu puises ta force dans ta famille et ceux qui sont à tes côtés.',
-    composure: 'Comme Senjuro, tu es plus discret que ton entourage, et c’est très bien ainsi.' }],
-  yoriichi: ['L’épéiste de légende', 'Humble, serein et incroyablement doué, tu accomplis des choses extraordinaires sans jamais t’en vanter.', {
+    composure: 'Comme Senjuro, tu fais moins de bruit que ton entourage, et c’est très bien ainsi.' }],
+  yoriichi: ['L’épéiste de légende', 'Humilité, sérénité et un talent inouï : tu accomplis des choses extraordinaires sans jamais t’en vanter.', {
     composure: 'Comme Yoriichi, tu es calme jusqu’à l’immobilité, comme un lac sans vent.',
     compassion: 'Comme Yoriichi, tu prends soin des choses simples : une fleur, un repas, un ami.',
     discipline: 'Comme Yoriichi, ta maîtrise paraît sans effort parce qu’elle est totale.',
     independence: 'Comme Yoriichi, tu suis ton propre chemin tranquille, sans besoin de public.' }],
-  giyu: ['Pilier de l’Eau', 'Calme, compétent et incapable d’expliquer quoi que ce soit, tu protèges les gens sans le dire à personne.', {
+  giyu: ['Pilier de l’Eau', 'Calme, capable et incapable d’expliquer quoi que ce soit : tu protèges les gens sans le dire à personne.', {
     independence: 'Comme Giyu, tu restes tellement dans ton coin qu’on croit que tu n’aimes personne. C’est faux.',
     composure: 'Comme Giyu, tu restes parfaitement immobile pendant que tout le monde panique.',
     discipline: 'Comme Giyu, ta technique est précise, efficace, sans geste inutile.',
     compassion: 'Comme Giyu, tu enfreins discrètement les règles pour protéger quelqu’un qui mérite une chance.' }],
-  rengoku: ['Pilier de la Flamme', 'Ardent, généreux et bruyant dans le bon sens, tu illumines chaque pièce et veilles sur tous ceux qui s’y trouvent.', {
+  rengoku: ['Pilier de la Flamme', 'Ardeur, générosité et du bruit dans le bon sens : tu illumines chaque pièce et veilles sur tous ceux qui s’y trouvent.', {
     intensity: 'Comme Rengoku, tu brûles fort. Ton cœur est toujours en pleine flamme.',
     compassion: 'Comme Rengoku, tu crois que les forts sont nés pour protéger les faibles.',
     discipline: 'Comme Rengoku, tu t’imposes les plus hautes exigences et tu élèves les autres à ce niveau.',
     playfulness: 'Comme Rengoku, ton enthousiasme est contagieux. Délicieux !' }],
-  shinobu: ['Pilier de l’Insecte', 'Souriante, vive et bien plus en colère que tu ne le montres, tu gagnes avec la tête là où d’autres utilisent les muscles.', {
-    discipline: 'Comme Shinobu, tu es méticuleuse : recherche, préparation, dose parfaite.',
+  shinobu: ['Pilier de l’Insecte', 'Un sourire, un esprit vif et bien plus de colère que tu ne le montres : tu gagnes avec la tête là où d’autres utilisent les muscles.', {
+    discipline: 'Comme Shinobu, tu ne laisses rien au hasard : recherche, préparation, dose parfaite.',
     composure: 'Comme Shinobu, tu gardes un sourire poli, quoi qu’il bouille en dessous.',
     playfulness: 'Comme Shinobu, tes taquineries sont douces… et aussi un avertissement.',
     ruthlessness: 'Comme Shinobu, tu peux être d’une efficacité terrifiante quand quelqu’un franchit la limite.' }],
-  tengen: ['Pilier du Son, dieu de l’extravagance', 'Tape-à-l’œil, sûr de toi et farouchement protecteur des tiens, tu ne fais rien à moitié, surtout pas le style.', {
+  tengen: ['Pilier du Son, dieu de l’extravagance', 'Du panache, de l’assurance et une loyauté féroce envers les tiens : tu ne fais rien à moitié, surtout pas le style.', {
     playfulness: 'Comme Tengen, tout ce que tu fais doit être flamboyant. La sobriété n’est pas une option.',
     intensity: 'Comme Tengen, tu fais les choses en grand, fort et à fond.',
     ambition: 'Comme Tengen, tu sais que tu es quelqu’un d’important et tu ne t’en caches pas.',
     compassion: 'Comme Tengen, sous les paillettes, ta première règle est : tout le monde rentre vivant.' }],
-  mitsuri: ['Pilier de l’Amour', 'Grand cœur, joyeuse et plus forte que quiconque ne l’imagine, tu aimes ouvertement et tu te bats avec férocité.', {
+  mitsuri: ['Pilier de l’Amour', 'Un grand cœur, de la joie et plus de force que quiconque ne l’imagine : tu aimes ouvertement et tu te bats avec férocité.', {
     compassion: 'Comme Mitsuri, ton cœur est immense, et tu n’as pas peur de le montrer.',
     playfulness: 'Comme Mitsuri, tu trouves de la joie partout : la nourriture, les amis, les petits moments doux.',
-    independence: 'Comme Mitsuri, tu es au meilleur de toi-même entourée des gens que tu adores.',
+    independence: 'Comme Mitsuri, tu t’épanouis au milieu des gens que tu adores.',
     intensity: 'Comme Mitsuri, derrière la douceur se cache une force qui surprend tout le monde.' }],
-  muichiro: ['Pilier de la Brume', 'Rêveur, détaché et d’un talent effrayant, tu flottes dans la vie jusqu’à ce que quelque chose compte vraiment.', {
+  muichiro: ['Pilier de la Brume', 'La tête dans les nuages et un talent effrayant : tu flottes dans la vie jusqu’à ce que quelque chose compte vraiment.', {
     independence: 'Comme Muichiro, tu vis dans ta tête, et tu t’y plais.',
     composure: 'Comme Muichiro, rien ne semble t’atteindre. Tu regardes juste les nuages.',
     discipline: 'Comme Muichiro, tu as maîtrisé en quelques mois ce qui prend des années aux autres.',
     ruthlessness: 'Comme Muichiro, tu peux être d’une franchise glaciale sans même t’en rendre compte.' }],
-  obanai: ['Pilier du Serpent', 'Langue acérée, méfiant et férocement loyal envers les rares que tu laisses entrer, tu fais confiance lentement et protèges entièrement.', {
-    discipline: 'Comme Obanai, tu es strict, exigeant et tu attends que les règles soient respectées.',
+  obanai: ['Pilier du Serpent', 'Une langue acérée, de la méfiance et une loyauté féroce envers les rares que tu laisses entrer : tu fais confiance lentement et protèges entièrement.', {
+    discipline: 'Comme Obanai, tu as des exigences strictes et tu attends que les règles soient respectées.',
     independence: 'Comme Obanai, tu gardes le monde à distance.',
     ruthlessness: 'Comme Obanai, tes mots peuvent couper plus profond qu’une lame.',
     composure: 'Comme Obanai, tu observes tout attentivement avant de frapper.' }],
-  sanemi: ['Pilier du Vent', 'Explosif, couvert de cicatrices et impossible à intimider, tu caches un cœur protecteur derrière un ouragan.', {
+  sanemi: ['Pilier du Vent', 'Des cicatrices, un tempérament explosif et rien ne t’intimide : tu caches un cœur protecteur derrière un ouragan.', {
     intensity: 'Comme Sanemi, tu es une tempête. Personne ne te rate quand tu entres.',
     independence: 'Comme Sanemi, tu ne fais pas facilement confiance et tu repousses les gens pour les protéger.',
     ruthlessness: 'Comme Sanemi, tu détestes la cruauté, et tu n’as aucune pitié pour ceux qui la causent.',
     discipline: 'Comme Sanemi, ta force a été gagnée de la manière la plus dure qui soit.' }],
   // TODO(owner) : remplace par ta propre lecture de Gyomei (avec les lignes anglaises). Brouillon du développeur.
-  gyomei: ['Pilier de la Pierre', 'Inébranlable, doux et la personne la plus forte de la pièce, tu portes tout le monde sans jamais que ça paraisse lourd.', {
+  gyomei: ['Pilier de la Pierre', 'Inébranlable, d’une grande douceur et la personne la plus forte de la pièce : tu portes tout le monde sans jamais que ça paraisse lourd.', {
     composure: 'Comme Gyomei, tu restes calme sous n’importe quelle pression : une pierre contre laquelle la tempête se brise.',
     compassion: 'Comme Gyomei, ton premier réflexe est d’aider, et on vient te voir avec des problèmes que personne d’autre ne sait résoudre.',
     discipline: 'Comme Gyomei, ton expertise vient d’années de pratique discrète et acharnée.',
     independence: 'Comme Gyomei, tu travailles avec constance aux côtés des autres tout en gardant ton propre jugement.' }],
-  tamayo: ['La médecin qui défie Muzan', 'Brillante, posée et discrètement déterminée, tu soignes, cherches et prépares le long terme.', {
-    composure: 'Comme Tamayo, tu restes gracieuse et posée en travaillant sur quelque chose qui peut changer le monde.',
+  tamayo: ['La médecin qui défie Muzan', 'Intelligence, calme et détermination discrète : tu soignes, cherches et prépares le long terme.', {
+    composure: 'Comme Tamayo, tu gardes ta grâce et ton calme en travaillant sur quelque chose qui peut changer le monde.',
     compassion: 'Comme Tamayo, tu utilises ton savoir pour soigner les autres.',
     discipline: 'Comme Tamayo, ta patience se compte en années, pas en jours.',
     independence: 'Comme Tamayo, tu travailles dans l’ombre, selon tes propres règles.' }],
-  yushiro: ['L’assistant dévoué de Tamayo', 'Piquant, loyal et dévoué au-delà de toute raison, tu traverserais le feu pour ta personne.', {
+  yushiro: ['L’assistant dévoué de Tamayo', 'Du piquant, de la loyauté et un dévouement au-delà de toute raison : tu traverserais le feu pour la personne qui compte pour toi.', {
     intensity: 'Comme Yushiro, tes émotions sortent fort et sans filtre.',
     independence: 'Comme Yushiro, tu n’as aucun intérêt pour qui que ce soit en dehors de ton tout petit cercle.',
-    ruthlessness: 'Comme Yushiro, tu es grossier avec tout le monde sauf avec la personne qui compte.',
-    discipline: 'Comme Yushiro, tu es étonnamment doué quand ça compte.' }],
-  kagaya: ['Chef du Corps des pourfendeurs de démons', 'Serein, persuasif et toujours trois coups d’avance, les gens te suivent sans savoir pourquoi.', {
+    ruthlessness: 'Comme Yushiro, tu manques de tact avec tout le monde sauf avec la personne qui compte.',
+    discipline: 'Comme Yushiro, tu as un talent étonnant quand ça compte.' }],
+  kagaya: ['Chef du Corps des pourfendeurs de démons', 'Sérénité, persuasion et toujours trois coups d’avance : on te suit sans trop savoir pourquoi.', {
     composure: 'Comme Kagaya, ta voix apaise une salle pleine des personnes les plus dangereuses au monde.',
     compassion: 'Comme Kagaya, tu te souviens de chaque nom et de chaque sacrifice.',
     discipline: 'Comme Kagaya, tu vois tout l’échiquier et tu planifies en conséquence.',
     ruthlessness: 'Comme Kagaya, derrière la douceur se cache une volonté de fer.' }],
-  haganezuka: ['Forgeron à la passion terrifiante', 'Obsédé par ton art et terrifiant quand on le manque de respect, tu es un génie au caractère volcanique.', {
+  haganezuka: ['Forgeron à la passion terrifiante', 'Une obsession pour ton art et une colère terrifiante quand on lui manque de respect : tu es un génie au caractère volcanique.', {
     intensity: 'Comme Haganezuka, tu n’as qu’un seul volume : le maximum.',
     discipline: 'Comme Haganezuka, ta dévotion à ton art frôle l’effrayant.',
     independence: 'Comme Haganezuka, tu fais les choses à ta façon, et seulement à ta façon.',
-    playfulness: 'Comme Haganezuka, tu es involontairement hilarant (pose ce couteau, s’il te plaît).' }],
+    playfulness: 'Comme Haganezuka, tu fais rire sans le vouloir (pose ce couteau, s’il te plaît).' }],
   // ——— Démons : « ton côté démon », joueur, jamais insultant ———
   muzan: ['Le Roi des démons', 'Ton côté démon veut le contrôle, la perfection et le dernier mot, pour toujours.', {
     ambition: 'Ton côté démon, comme Muzan, veut être parfait et intouchable, et attend que le monde s’adapte.',
@@ -260,7 +260,7 @@ const C = {
     ambition: 'Ton côté démon, comme Kokushibo, ne supporte pas d’être second, derrière qui que ce soit.',
     composure: 'Ton côté démon, comme Kokushibo, est froid, maîtrisé et très difficile à déstabiliser.',
     independence: 'Ton côté démon, comme Kokushibo, marche seul et préfère ça.' }],
-  doma: ['Lune supérieure Deux', 'Ton côté démon n’est que sourires et charme, avec absolument rien derrière les yeux.', {
+  doma: ['Lune supérieure Deux', 'Ton côté démon n’est que sourires et charme, et rien du tout derrière les yeux.', {
     playfulness: 'Ton côté démon, comme Doma, est joyeux, bavard et charmant aux pires moments.',
     ruthlessness: 'Ton côté démon, comme Doma, peut sourire tendrement en faisant quelque chose de terrible.',
     composure: 'Ton côté démon, comme Doma, ne perd jamais son calme, parce qu’il ne ressent jamais vraiment rien.',
