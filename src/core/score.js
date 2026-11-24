@@ -1,10 +1,22 @@
 import { TRAITS, normalise, traitBounds } from './traits.js';
 
-const boundsCache = new WeakMap();
-const boundsFor = (qs) => {
-  if (!boundsCache.has(qs)) boundsCache.set(qs, traitBounds(qs));
-  return boundsCache.get(qs);
+const memo = (fn) => {
+  const cache = new WeakMap();
+  return (key) => {
+    if (!cache.has(key)) cache.set(key, fn(key));
+    return cache.get(key);
+  };
 };
+const boundsFor = memo(traitBounds);
+
+/** The profile an "average" answerer gets: expected raw score under uniform answers, normalised. */
+export const neutralProfile = memo((questions) => {
+  const raw = Object.fromEntries(TRAITS.map((t) => [t, 0]));
+  for (const q of questions) {
+    for (const t of TRAITS) raw[t] += q.answers.reduce((s, a) => s + (a.deltas[t] ?? 0), 0) / q.answers.length;
+  }
+  return normalise(raw, boundsFor(questions));
+});
 
 /** Turn chosen answer ids into a normalised trait profile + resolve total. */
 export function scoreAnswers(answerIds, questions) {
@@ -19,27 +31,41 @@ export function scoreAnswers(answerIds, questions) {
     for (const [t, d] of Object.entries(a.deltas)) raw[t] += d;
     resolve += a.resolve;
   }
-  return { traits: normalise(raw, boundsFor(questions)), resolve, maxResolve };
+  return { traits: normalise(raw, boundsFor(questions)), resolve, maxResolve, center: neutralProfile(questions) };
 }
 
-export function distance(a, b, weights) {
-  let sum = 0;
-  for (const t of TRAITS) sum += (weights?.[t] ?? 1) * (a[t] - b[t]) ** 2;
-  return Math.sqrt(sum);
+export function meanProfile(items) {
+  return Object.fromEntries(TRAITS.map((t) => [t, items.reduce((s, x) => s + x.traits[t], 0) / items.length]));
 }
 
-const DMAX = Math.sqrt(TRAITS.length * 100);
+/** Cosine of (a − ca) and (b − cb); 0 when either vector is flat. */
+export function centredCosine(a, ca, b, cb, weights) {
+  let dot = 0, na = 0, nb = 0;
+  for (const t of TRAITS) {
+    const w = weights?.[t] ?? 1;
+    const x = a[t] - ca[t];
+    const y = b[t] - cb[t];
+    dot += w * x * y; na += w * x * x; nb += w * y * y;
+  }
+  return na === 0 || nb === 0 ? 0 : dot / Math.sqrt(na * nb);
+}
 
-/** Display-friendly match %: 99 for a perfect profile, floored at 35. */
-export const similarity = (d) => Math.min(99, Math.max(35, Math.round(100 * (1 - d / (0.6 * DMAX)))));
+/** Display-friendly match % from a cosine: 99 when aligned, floored at 35. */
+export const similarity = (cos) => Math.min(99, Math.max(35, Math.round(100 * (0.5 + 0.5 * cos))));
 
-/** Characters of one pool, nearest first. */
-export function matchPool(traits, characters, pool, weights) {
-  return characters
-    .filter((c) => c.pool === pool)
+const FLAT5 = Object.fromEntries(TRAITS.map((t) => [t, 5]));
+
+/**
+ * Characters of one pool, nearest first. The user is centred on `center` (their neutral profile),
+ * each character on its pool's mean, so we compare the *shape* of a personality, not raw levels.
+ */
+export function matchPool(traits, characters, pool, { center = FLAT5, weights } = {}) {
+  const members = characters.filter((c) => c.pool === pool);
+  const poolMean = meanProfile(members);
+  return members
     .map((c) => {
-      const d = distance(traits, c.traits, weights);
-      return { id: c.id, distance: Math.round(d * 1000) / 1000, similarity: similarity(d) };
+      const cos = centredCosine(traits, center, c.traits, poolMean, weights);
+      return { id: c.id, distance: Math.round((1 - cos) * 1e4) / 1e4, similarity: similarity(cos) };
     })
     .sort((x, y) => x.distance - y.distance);
 }
