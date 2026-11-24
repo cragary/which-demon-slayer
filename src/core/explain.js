@@ -4,7 +4,7 @@ import { TRAITS } from './traits.js';
  * 2–3 sentences on why this character fits: the character's strongest traits (top 4) where
  * the user sits closest, voiced through the character's phrases, plus one of the user's own answers.
  */
-export function explain(userTraits, character, answers) {
+export function explain(userTraits, character, answers, youChose = (t) => `You chose: "${t}"`) {
   const top = [...TRAITS].sort((a, b) => character.traits[b] - character.traits[a]).slice(0, 4);
   const picked = top
     .filter((t) => character.phrases?.[t])
@@ -15,7 +15,10 @@ export function explain(userTraits, character, answers) {
   if (answers?.length) {
     const lead = picked[0];
     const best = [...answers].sort((a, b) => (b.answer.deltas[lead] ?? 0) - (a.answer.deltas[lead] ?? 0))[0];
-    if ((best.answer.deltas[lead] ?? 0) > 0) out.push(`You chose: "${best.answer.text}"`);
+    if ((best.answer.deltas[lead] ?? 0) > 0) {
+      out.push(youChose(best.answer.text));
+      out.quote = best.answer.text; // lets callers style the quote and avoid repeating it
+    }
   }
   return out;
 }

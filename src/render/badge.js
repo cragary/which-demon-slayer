@@ -2,7 +2,7 @@
 import { TRAITS } from '../core/traits.js';
 import { escapeXml, clampName, estimateEm } from '../core/escape.js';
 import { emblemAt } from './emblem.js';
-import { STRINGS } from '../data/strings.en.js';
+import { STRINGS as STRINGS_EN } from '../data/strings.en.js';
 import { BASE_URL } from '../config.js';
 
 export const FONT_DISPLAY = 'DotGothic16';
@@ -27,7 +27,7 @@ const topTraits = (traits) => (traits ? [...TRAITS].sort((a, b) => traits[b] - t
 
 const host = BASE_URL.replace(/^https?:\/\//, '').replace(/\/$/, '');
 
-export function badgeSvg(result, data, { format = 'portrait' } = {}) {
+export function badgeSvg(result, data, { format = 'portrait', strings: STRINGS = STRINGS_EN } = {}) {
   const char = (id) => data.characters.find((c) => c.id === id);
   const slayer = char(result.slayer);
   const demon = result.demon ? char(result.demon) : null;
@@ -40,12 +40,12 @@ export function badgeSvg(result, data, { format = 'portrait' } = {}) {
     return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
   ${frame(W, H)}
   ${emblemAt(slayer.id, 80, 95, 440)}
-  ${t(580, 170, 30, STRINGS.title.toUpperCase(), { family: FONT_DISPLAY, fill: CRIMSON })}
-  ${t(580, 255, 62, `I'm ${slayer.name.split(' ')[0]}!`, { family: FONT_DISPLAY })}
+  ${t(580, 170, 30, STRINGS.title.toUpperCase(), { family: FONT_DISPLAY, fill: CRIMSON, max: 560 })}
+  ${t(580, 255, 62, STRINGS.ogIm(slayer.name.split(' ')[0]), { family: FONT_DISPLAY, max: 560 })}
   ${t(580, 310, 34, slayer.title, { opacity: 0.8, max: 560 })}
-  ${t(580, 400, 30, 'Your Slayer, your demon side,')}
-  ${t(580, 440, 30, 'your breathing and your rank.')}
-  ${t(580, 500, 30, 'Find yours in 20 questions.', { weight: 700, fill: CRIMSON })}
+  ${t(580, 400, 30, STRINGS.ogLine1, { max: 560 })}
+  ${t(580, 440, 30, STRINGS.ogLine2, { max: 560 })}
+  ${t(580, 500, 30, STRINGS.ogFind, { weight: 700, fill: CRIMSON, max: 560 })}
   ${t(580, 545, 24, host, { opacity: 0.6 })}
 </svg>`;
   }
@@ -54,7 +54,7 @@ export function badgeSvg(result, data, { format = 'portrait' } = {}) {
   const bars = topTraits(result.traits).map((k, i) => {
     const y = 1030 + i * 62;
     const v = Math.max(0, Math.min(10, result.traits[k]));
-    return `${t(110, y + 30, 32, STRINGS.traits[k])}
+    return `${t(110, y + 30, 32, STRINGS.traits[k], { max: 300 })}
   <rect x="420" y="${y + 6}" width="540" height="30" fill="none" stroke="${INK}" stroke-width="3"/>
   <rect x="426" y="${y + 12}" width="${Math.round(528 * v / 10)}" height="18" fill="${slayer.palette[0]}"/>`;
   }).join('\n  ');
@@ -62,7 +62,7 @@ export function badgeSvg(result, data, { format = 'portrait' } = {}) {
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
   ${frame(W, H)}
   <rect x="32" y="32" width="${W - 64}" height="96" fill="${INK}"/>
-  ${t(W / 2, 96, 40, STRINGS.title.toUpperCase(), { family: FONT_DISPLAY, fill: PAPER, anchor: 'middle' })}
+  ${t(W / 2, 96, 40, STRINGS.title.toUpperCase(), { family: FONT_DISPLAY, fill: PAPER, anchor: 'middle', max: 960 })}
   ${t(W / 2, 190, 36, name ? STRINGS.resultOf(`⁨${name}⁩`) : STRINGS.myResult, { anchor: 'middle', opacity: 0.85, max: 960 })}
 
   ${emblemAt(slayer.id, 90, 230, 420)}
@@ -79,12 +79,12 @@ export function badgeSvg(result, data, { format = 'portrait' } = {}) {
 
   <line x1="90" y1="868" x2="${W - 90}" y2="868" stroke="${INK}" stroke-width="2" opacity="0.4"/>
   ${breathing ? `<rect x="110" y="900" width="26" height="26" fill="${breathing.color}"/>
-  ${t(150, 924, 34, `${breathing.name}`, { weight: 700 })}` : ''}
-  ${rank ? `${t(W - 110, 924, 34, `Rank: ${rank.name}`, { weight: 700, anchor: 'end' })}` : ''}
+  ${t(150, 924, 34, breathing.name, { weight: 700, max: 420 })}` : ''}
+  ${rank ? `${t(W - 110, 924, 34, STRINGS.rankLabel(rank.name), { weight: 700, anchor: 'end', max: 420 })}` : ''}
   ${rank ? t(W / 2, 982, 26, rank.line, { anchor: 'middle', opacity: 0.75, max: 900 }) : ''}
 
   ${bars}
 
-  ${t(W / 2, 1268, 26, `Which one are you? ${host}`, { anchor: 'middle', fill: CRIMSON })}
+  ${t(W / 2, 1268, 26, STRINGS.badgeFooter(host), { anchor: 'middle', fill: CRIMSON, max: 960 })}
 </svg>`;
 }
